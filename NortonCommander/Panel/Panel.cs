@@ -23,8 +23,8 @@ namespace NortonCommander.Panel
         
         public static void PointsInitializer()
         {
-            Console.SetWindowSize(120, 30);
-            Console.SetBufferSize(200, 200);
+            //Console.SetWindowSize(120, 30);
+            //Console.SetBufferSize(120, 30);
             var wh = Console.WindowHeight - 4;
             var ww = Console.WindowWidth;
             Point firstStart = new Point(0, wh);

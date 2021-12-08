@@ -1,4 +1,4 @@
-﻿public enum Buttons
+﻿public enum ButtonEnum
 {
     Help = 1,
     Search,

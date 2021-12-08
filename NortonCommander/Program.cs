@@ -6,6 +6,8 @@ namespace NortonCommander
 
     class Program
     {
+
+       
         public static void ArrangeButtons()
         {
             int origWidth = Console.WindowWidth;
@@ -16,13 +18,10 @@ namespace NortonCommander
             string MenuItem = "";
             for (int i = 0; i <= 9; i++)
             {
-                MenuItem = SetLength("F" + (i + 1).ToString() + " " + Enum.GetName(typeof(Buttons), i + 1), MenuLength);
+                MenuItem = SetLength("F" + (i + 1).ToString() + " " + Enum.GetName(typeof(ButtonEnum), i + 1), MenuLength);
                 int y = i * (MenuLength + Space) + StartPosition;
                 Button.Button MyButton = new Button.Button(MenuItem, y, origHeight, ConsoleColor.Black, ConsoleColor.Blue);
             }
-
-
-
         }
 
         // Increase or decrease of button size 

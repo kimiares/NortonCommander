@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NortonCommander
 {
@@ -6,8 +7,10 @@ namespace NortonCommander
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Hello World!");
+            List<object> menu = new List<object> { "word1", "word2", "word3" };
+            Panel.Panel.PointsInitializer();
+            Panel.Panel.PrintFirstRow(menu);
+
 
         }
     }

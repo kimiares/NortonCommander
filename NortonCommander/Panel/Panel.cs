@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NortonCommander.Panel
 {
-    class Panel
+    public class Panel
     {
 
         //points initializer
@@ -63,7 +63,7 @@ namespace NortonCommander.Panel
             Console.Write("═");
             Console.SetCursorPosition((ww - 41), wh);
             Console.Write("═");
-            Console.BackgroundColor = ConsoleColor.Cyan;
+            //Console.BackgroundColor = ConsoleColor.Cyan;
 
         }
         

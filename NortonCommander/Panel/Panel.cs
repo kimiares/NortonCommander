@@ -14,13 +14,7 @@ namespace NortonCommander.Panel
         int wh = Console.WindowHeight - 4;
         public int ww = Console.WindowWidth;
 
-        public Panel()
-        {
-
-        }
-        
-        
-        
+       
         public static void PointsInitializer()
         {
             //Console.SetWindowSize(120, 30);

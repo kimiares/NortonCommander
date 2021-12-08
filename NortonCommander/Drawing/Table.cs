@@ -56,6 +56,8 @@ namespace NortonCommander.Drawing
                 line.Draw();
             }
         }
+
+
     }
 
     

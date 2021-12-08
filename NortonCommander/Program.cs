@@ -20,7 +20,7 @@ namespace NortonCommander
             {
                 MenuItem = SetLength("F" + (i + 1).ToString() + " " + Enum.GetName(typeof(ButtonEnum), i + 1), MenuLength);
                 int y = i * (MenuLength + Space) + StartPosition;
-                Button.Button MyButton = new Button.Button(MenuItem, y, origHeight, ConsoleColor.Black, ConsoleColor.Blue);
+                Button.Button MyButton = new Button.Button(MenuItem, y, origHeight, ConsoleColor.Black, ConsoleColor.Blue );
             }
         }
 
@@ -48,10 +48,17 @@ namespace NortonCommander
 
         static void Main(string[] args)
         {
-            List<object> menu = new List<object> { "word1", "word2", "word3" };
+            List<object> menu = new List<object> { "word1", "word2", "word3", "word3" , "word3" , "word3" , "word3" , 
+                "word3" , "word3" , "word3" , "word3" , "word3" , "word3" , "word3" , "word3" , "word3" };
+
+            Console.ResetColor();
             ArrangeButtons();
+            
             Panel.Panel.PointsInitializer();
+            
             Panel.Panel.PrintFirstRow(menu);
+
+
 
 
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Panel.Drawing
+namespace NortonCommander.Drawing
 {
     class Point
     {

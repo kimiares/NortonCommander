@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NortonCommander.Drawing
 {
-    class Line: List<Point>
+    class Line : List<Point>
     {
         public Point A { get; set; }
         public Point B { get; set; }

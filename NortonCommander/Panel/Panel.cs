@@ -1,12 +1,11 @@
-﻿using Panel.Drawing;
+﻿using NortonCommander.Drawing;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Panel
+namespace NortonCommander.Panel
 {
     class Panel
     {
@@ -67,12 +66,12 @@ namespace Panel
             Console.BackgroundColor = ConsoleColor.Cyan;
 
         }
-        #region Corners
+        
         public static void PrintFirstRow(List<object> list)
         {
 
             //from menu
-            ConsoleMenu consoleMenu = new ConsoleMenu(list, 1,2);
+            ListInColumn consoleMenu = new ListInColumn(list, 1,2);
             ConsoleKeyInfo arrow;
             do
             {
@@ -98,10 +97,7 @@ namespace Panel
         public static void PrintSecondRow(List<object> list)
         {
 
-            int start = ((Console.WindowWidth / 2) - 40) + 1;
-            int finish = 2;
-            ListItems menuLib = new ListItems(list, start, finish);
-            menuLib.Show(start, finish);
+            
 
 
             //foreach (var l in list)
@@ -169,7 +165,7 @@ namespace Panel
         }
 
 
-        #endregion
+        
 
 
 

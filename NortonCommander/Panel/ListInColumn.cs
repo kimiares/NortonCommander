@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Panel
+namespace NortonCommander.Panel
 {
-    class ConsoleMenu
+    class ListInColumn
     {
         public IList<object> Items;
         internal int selectedIndex;
@@ -37,7 +37,7 @@ namespace Panel
         }
 
 
-        public ConsoleMenu(IList<object> items, int x, int y)
+        public ListInColumn(IList<object> items, int x, int y)
         {
             this.Items = items;
             this.startX = x;
@@ -64,9 +64,6 @@ namespace Panel
                 }
             }
         }
-        private void ManageMenu(ConsoleKeyInfo Key)
-        {
-
-        }
+        
     }
 }

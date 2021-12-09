@@ -17,10 +17,7 @@ namespace NortonCommander.Button
             TextColor = textcolor;
             BackColor = backcolor;
             Draw();
-
-
         }
-
 
         public int Size { get; set; }
         public string Text { get; set; }

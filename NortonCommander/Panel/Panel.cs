@@ -11,28 +11,23 @@ namespace NortonCommander.Panel
     {
 
         //points initializer
-        int wh = Console.WindowHeight - 4;
-        public int ww = Console.WindowWidth;
+        public static int ConsoleHeight = Console.WindowHeight;
+        public static int ConsoleWidth = Console.WindowWidth;
 
        
-        public static void PanelInitializer()
+        public static void PanelInitializer(int colcount)
         {
             //Console.SetWindowSize(120, 30);
             //Console.SetBufferSize(120, 30);
-            var wh = Console.WindowHeight - 4;
-            var ww = Console.WindowWidth;
-            Point firstStart = new Point(0, wh);
-            Point firstFinish = new Point((ww / 2) - 1, 1);
+            Point firstStart = new Point(0, ConsoleHeight-4);
+            Point firstFinish = new Point(ConsoleWidth / 2 - 1, 1);
 
-            Point secondStart = new Point((ww / 2 + 1), wh);
-            Point secondFinish = new Point(119, 1);
+            Point secondStart = new Point((ConsoleWidth / 2 + 1), firstStart.Y);
+            Point secondFinish = new Point(ConsoleWidth-1, firstFinish.Y);
             
-            Table firstTable = new Table(firstStart, firstFinish);
-            Table secondTable = new Table(secondStart, secondFinish);
-            
-            
-
-        }
+            Table firstTable = new Table(firstStart, firstFinish, colcount);
+            Table secondTable = new Table(secondStart, secondFinish, colcount);
+         }
         
         public static void PrintFirstRow(List<object> list)
         {
@@ -84,7 +79,7 @@ namespace NortonCommander.Panel
             {
                 for (var i = 0; i < list.Count; i++)
                 {
-                    Console.SetCursorPosition(((ww / 2) - 20) + 1, 2 + i);
+                    Console.SetCursorPosition(((ConsoleWidth / 2) - 20) + 1, 2 + i);
                     Console.WriteLine(l);
                 }
 
@@ -97,7 +92,7 @@ namespace NortonCommander.Panel
             {
                 for (var i = 0; i < list.Count; i++)
                 {
-                    Console.SetCursorPosition((ww / 2) + 1, 2 + i);
+                    Console.SetCursorPosition((ConsoleWidth / 2) + 1, 2 + i);
                     Console.WriteLine(l);
                 }
 
@@ -110,7 +105,7 @@ namespace NortonCommander.Panel
             {
                 for (var i = 0; i < list.Count; i++)
                 {
-                    Console.SetCursorPosition((ww - 40) + 1, 2 + i);
+                    Console.SetCursorPosition((ConsoleWidth - 40) + 1, 2 + i);
                     Console.WriteLine(l);
                 }
 
@@ -123,7 +118,7 @@ namespace NortonCommander.Panel
             {
                 for (var i = 0; i < list.Count; i++)
                 {
-                    Console.SetCursorPosition((ww - 20) + 1, 2 + i);
+                    Console.SetCursorPosition((ConsoleWidth - 20) + 1, 2 + i);
                     Console.WriteLine(l);
                 }
 

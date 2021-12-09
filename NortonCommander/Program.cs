@@ -55,7 +55,7 @@ namespace NortonCommander
             Console.ResetColor();
             ArrangeButtons();
             
-            Panel.Panel.PanelInitializer();
+            Panel.Panel.PanelInitializer(3);
             
             Panel.Panel.PrintFirstRow(menu);
 

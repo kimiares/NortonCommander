@@ -13,7 +13,9 @@ namespace NortonCommander.Panel
         //points initializer
         int wh = Console.WindowHeight - 4;
         public int ww = Console.WindowWidth;
-        public static void PointsInitializer()
+
+       
+        public static void PanelInitializer()
         {
             //Console.SetWindowSize(120, 30);
             //Console.SetBufferSize(120, 30);
@@ -21,49 +23,14 @@ namespace NortonCommander.Panel
             var ww = Console.WindowWidth;
             Point firstStart = new Point(0, wh);
             Point firstFinish = new Point((ww / 2) - 1, 1);
+
             Point secondStart = new Point((ww / 2 + 1), wh);
             Point secondFinish = new Point(119, 1);
+            
             Table firstTable = new Table(firstStart, firstFinish);
             Table secondTable = new Table(secondStart, secondFinish);
             
-            firstTable.Draw();
-            secondTable.Draw();
             
-            Console.SetCursorPosition(0, 1);
-            Console.Write("╔");
-            Console.SetCursorPosition((ww / 2) - 1, 1);
-            Console.Write("╗");
-            Console.SetCursorPosition(0, wh);
-            Console.Write("╚");
-            Console.SetCursorPosition((ww / 2) - 1, wh);
-            Console.Write("╝");
-            Console.SetCursorPosition((ww / 2) - 21, 1);
-            Console.Write("═");
-            Console.SetCursorPosition((ww / 2) - 41, 1);
-            Console.Write("═");
-            Console.SetCursorPosition((ww / 2) - 21, wh);
-            Console.Write("═");
-            Console.SetCursorPosition((ww / 2) - 41, wh);
-            Console.Write("═");
-
-            Console.SetCursorPosition((ww / 2 + 1), 1);
-            Console.Write("╔");
-            Console.SetCursorPosition(ww - 1, 1);
-            Console.Write("╗");
-            Console.SetCursorPosition((ww / 2 + 1), wh);
-            Console.Write("╚");
-            Console.SetCursorPosition(ww - 1, wh);
-            Console.Write("╝");
-
-            Console.SetCursorPosition((ww - 21), 1);
-            Console.Write("═");
-            Console.SetCursorPosition((ww - 41), 1);
-            Console.Write("═");
-            Console.SetCursorPosition((ww - 21), wh);
-            Console.Write("═");
-            Console.SetCursorPosition((ww - 41), wh);
-            Console.Write("═");
-            //Console.BackgroundColor = ConsoleColor.Cyan;
 
         }
         

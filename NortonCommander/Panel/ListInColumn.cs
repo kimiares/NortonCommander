@@ -45,18 +45,25 @@ namespace NortonCommander.Panel
         }
         private void Draw(int x, int y)
         {
-            //Console.Clear();
+            Console.ResetColor();
             for (int i = 0; i < Items.Count; i++)
             {
+                
                 Console.SetCursorPosition(x, y+i);
                 if (i == selectedIndex)
                 {
+                    
+
                     var tmp = Console.BackgroundColor;
                     Console.BackgroundColor = Console.ForegroundColor;
                     Console.ForegroundColor = tmp;
                     Console.WriteLine(Items[i]);
+                    
                     Console.ForegroundColor = Console.BackgroundColor;
                     Console.BackgroundColor = tmp;
+
+
+
                 }
                 else
                 {

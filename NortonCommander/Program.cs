@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace NortonCommander
 {
 
@@ -54,7 +55,7 @@ namespace NortonCommander
             Console.ResetColor();
             ArrangeButtons();
             
-            Panel.Panel.PointsInitializer();
+            Panel.Panel.PanelInitializer();
             
             Panel.Panel.PrintFirstRow(menu);
 

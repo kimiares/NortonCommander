@@ -52,11 +52,7 @@ namespace NortonCommander.Panel
                 Console.SetCursorPosition(x, y+i);
                 if (i == selectedIndex)
                 {
-                    //var tmp = Console.BackgroundColor;
-                    //Console.BackgroundColor = Console.ForegroundColor;
-                    //Console.ForegroundColor = tmp;
-
-
+                    
 
                     var tmp = Console.BackgroundColor;
                     Console.BackgroundColor = Console.ForegroundColor;
@@ -66,8 +62,6 @@ namespace NortonCommander.Panel
                     Console.ForegroundColor = Console.BackgroundColor;
                     Console.BackgroundColor = tmp;
 
-                    //Console.ForegroundColor = Console.BackgroundColor;
-                    //Console.BackgroundColor = tmp;
 
 
                 }

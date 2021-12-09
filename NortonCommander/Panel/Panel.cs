@@ -56,23 +56,11 @@ namespace NortonCommander.Panel
             Console.Clear();
 
         }
-        public static void PrintSecondRow(List<object> list)
-        {
+        
 
-            
+         
 
-
-            //foreach (var l in list)
-            //{
-            //    for (var i = 0; i < list.Count; i++)
-            //    {
-            //        Console.SetCursorPosition(((ww/2)-40)+1,2+i);
-            //        Console.WriteLine(l);
-            //    }
-
-            //}
-
-        }
+        
         public void PrintThirdRow(List<object> list)
         {
             foreach (var l in list)

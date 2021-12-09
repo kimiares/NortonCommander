@@ -8,5 +8,19 @@ namespace NortonCommander.Operations
 {
     class File
     {
+        public void Delete(string path)
+        {
+            
+        }
+
+        /*Search,
+    Compare,
+    Info,
+    Copy,
+    RenMov,
+    MkDir,
+    Delete,
+    DiskInfo,
+    Quit*/
     }
 }

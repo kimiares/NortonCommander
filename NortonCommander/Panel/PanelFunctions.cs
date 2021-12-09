@@ -30,8 +30,34 @@ namespace NortonCommander.Panel
             {
                 throw new Exception("There is no objects");
             }
-            
+
         }
+
+        //public void TestPrint(IList<object> list)
+        //{
+
+
+
+        //    for(int i=0; i < list.Count; i++)
+        //    {
+
+
+        //        Console.WriteLine(i);
+        //        if (i == maxObjectCount)
+        //        {
+        //            for(int j = i+1; j<list.Count; j++)
+        //            {
+        //                Console.WriteLine(j);
+        //                if (j == maxObjectCount)
+        //                {
+        //                    // и так далее
+        //                }
+        //            }
+        //        }
+        //    }
+    
+
+       
         
     }
 }

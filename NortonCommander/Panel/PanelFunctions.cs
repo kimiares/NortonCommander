@@ -15,7 +15,9 @@ namespace NortonCommander.Panel
 
         public static int PanelHeight = Console.WindowHeight;
         public static int PanelWidth = Console.WindowWidth;
-        public int maxObjectsPanel = PanelHeight - 6;
+        public static int maxObjectsPanel = PanelHeight - 6;
+        public static int columnWidth;
+        public static Point columnStartPoint;
 
         public int selectedObjectIndex = 0;
         public int firstObjectIndex = 0;
@@ -48,16 +50,48 @@ namespace NortonCommander.Panel
             string path = Disk.GetFirstDiskPath();
             this.objects.AddRange(Folder.GetFolders(path));
             this.objects.AddRange(Files.GetFiles(path));
+            PrintObjects(this.objects);
 
         }
 
-
+        //если меньше чем максимум - просто выводим, если больше - выводим 
         public void PrintObjects(List<FileSystemInfo> list)
         {
-            foreach (FileSystemInfo f in this.objects)
+
+            List<FileSystemInfo> temp = new();
+            for (int i = 0; i < list.Count; i++)
+                {
+                Console.SetCursorPosition(columnStartPoint.X, columnStartPoint.Y + i);
+                    if (i == selectedObjectIndex)
+                    {
+                        var tmp = Console.BackgroundColor;
+                        Console.BackgroundColor = Console.ForegroundColor;
+                        Console.ForegroundColor = tmp;
+                        Console.WriteLine(list[i].Name);
+                        Console.ForegroundColor = Console.BackgroundColor;
+                        Console.BackgroundColor = tmp;
+                    }
+                Console.WriteLine(list[i].Name);
+                if (i == maxObjectsPanel)
+                {
+                    temp = list.Skip(maxObjectsPanel).ToList();
+                    PrintObjects(temp);
+                }
+                }
+            
+            
+        }
+        public static List<FileSystemInfo> GetLocalList(List<FileSystemInfo> list, int currentIndex)
+        {
+            List<FileSystemInfo> resultList = new List<FileSystemInfo>();
+            if ((currentIndex + maxObjectsPanel) > list.Count)
+            { currentIndex = list.Count - maxObjectsPanel; }
+
+            for (int i = currentIndex; i < currentIndex + maxObjectsPanel; i++)
             {
-                //выводим
+                resultList.Add(list[i]);
             }
+            return resultList;
         }
 
         //обновить данные в панели или саму панель?
@@ -69,13 +103,14 @@ namespace NortonCommander.Panel
         //при изменении объектов в колонке нужно закрасить действующие, а потом выводить
 
 
-        //перенести в тейбл
+        //перенести в тейбл?
+        //заливает все строки столбца пробелами
         public void RefreshContent()
         {
             for (int i = 1; i < maxObjectsPanel; i++)
             {
-                //  Console.SetCursorPosition(//начало колонки, там где текст);
-                //  Console.Write(new String(' ', //ширина колонки);
+                Console.SetCursorPosition(columnStartPoint.X, columnStartPoint.Y);
+                Console.Write(new String(' ', columnWidth));
             }
 
         }
@@ -84,27 +119,12 @@ namespace NortonCommander.Panel
         {
             if (this.Active)
             {
-
+                this.Active = !Active;
             }
         }
 
-        //при нажатии энтера мы либо открываем, либо запускаем*
-
-        // в класс повыше
-        public void OpenOrRunObject(FileSystemInfo file)
-        {
-
-
-            if (file is DirectoryInfo)
-            {
-                Directory.GetDirectories(file.FullName);
-                //PrintObjects();
-            }
-            if (file is FileInfo)
-            {
-                Process.Start(file.FullName);
-            }
-        }
+       
+       
 
 
 

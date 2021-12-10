@@ -1,5 +1,8 @@
-﻿using System;
+﻿using NortonCommander.Drawing;
+using NortonCommander.Operations;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,57 +10,105 @@ using System.Threading.Tasks;
 
 namespace NortonCommander.Panel
 {
-    public class PanelFunctions
+     class PanelFunctions:Table
     {
 
-        private int selectObjIndex = 0;
-        private int firstObjIndex = 0;
-        private int maxObjectCount = 28;
+        public static int PanelHeight = Console.WindowHeight;
+        public static int PanelWidth = Console.WindowWidth;
+        public int maxObjectsPanel = PanelHeight - 6;
+
+        public int selectedObjectIndex = 0;
+        public int firstObjectIndex = 0;
+        
+        public bool Active { get; set; }
 
 
+        // отрисовка
+        public PanelFunctions(string name, Point a, Point b, int colcount, ConsoleColor textColor, ConsoleColor backColor) 
+            : base(name, a, b, colcount,  textColor,  backColor)
+        {
+
+            //this.textColor = textColor;
+            //this.backColor = backColor;
+            SetContent();
+
+            // начальная инициализация контента
+
+        }
+
+        //все, что выводится в панели
         List<FileSystemInfo> objects = new List<FileSystemInfo>();
 
 
 
 
-        public FileSystemInfo GetSelectObject()
+        // инициализация с первого диска 
+        public void SetContent()
         {
-            if (this.objects != null && this.objects.Count != 0)
+            string path = Disk.GetFirstDiskPath();
+            this.objects.AddRange(Folder.GetFolders(path));
+            this.objects.AddRange(Files.GetFiles(path));
+
+        }
+
+
+        public void PrintObjects(List<FileSystemInfo> list)
+        {
+            foreach (FileSystemInfo f in this.objects)
             {
-                return this.objects[this.selectObjIndex];
+                //выводим
             }
-            else
+        }
+
+        //обновить данные в панели или саму панель?
+        public void RefreshPanel()
+        {
+            //если меню было и нет
+        }
+
+        //при изменении объектов в колонке нужно закрасить действующие, а потом выводить
+
+
+        //перенести в тейбл
+        public void RefreshContent()
+        {
+            for (int i = 1; i < maxObjectsPanel; i++)
             {
-                throw new Exception("There is no objects");
+                //  Console.SetCursorPosition(//начало колонки, там где текст);
+                //  Console.Write(new String(' ', //ширина колонки);
             }
 
         }
 
-        //public void TestPrint(IList<object> list)
-        //{
+        public void SwitchPanel()
+        {
+            if (this.Active)
+            {
+
+            }
+        }
+
+        //при нажатии энтера мы либо открываем, либо запускаем*
+
+        // в класс повыше
+        public void OpenOrRunObject(FileSystemInfo file)
+        {
+
+
+            if (file is DirectoryInfo)
+            {
+                Directory.GetDirectories(file.FullName);
+                //PrintObjects();
+            }
+            if (file is FileInfo)
+            {
+                Process.Start(file.FullName);
+            }
+        }
 
 
 
-        //    for(int i=0; i < list.Count; i++)
-        //    {
 
 
-        //        Console.WriteLine(i);
-        //        if (i == maxObjectCount)
-        //        {
-        //            for(int j = i+1; j<list.Count; j++)
-        //            {
-        //                Console.WriteLine(j);
-        //                if (j == maxObjectCount)
-        //                {
-        //                    // и так далее
-        //                }
-        //            }
-        //        }
-        //    }
-    
-
-       
-        
     }
 }

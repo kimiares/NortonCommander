@@ -58,25 +58,33 @@ namespace NortonCommander.Drawing
             return PointForTCorners;
         }
 
-        public Table(string name, Point a, Point b, int colcount)
+        public Table(string name, Point a, Point b, int colcount, ConsoleColor textcolor, ConsoleColor backcolor)
         {
             Name = name;
             ColCount = colcount;
             A = a;
             B = b;
+            TextColor = textcolor;
+            BackColor = backcolor;
             Lines = LinesInitializer();
+            Console.BackgroundColor = BackColor;
+            Console.ForegroundColor = TextColor;
             Draw();
             DrawCorners(GetCornersPoint());
             DrawTCorners(GetTCornersPoint());
             AddTableName();
+            Console.ResetColor();
 
         }
         public virtual void Draw()
         {
+            
+
             foreach (Line line in Lines)
             {
                 line.Draw();
             }
+           
          }
 
         public void AddTableName()

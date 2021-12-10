@@ -9,8 +9,17 @@ namespace NortonCommander
     class Program
     {
 
-       
-        public static void ArrangeButtons()
+        public static ConsoleKeyInfo GetKey()
+        {
+            ConsoleKeyInfo key;
+            do
+            {
+                key = Console.ReadKey(true);
+            }
+            while (key.Key==0) ;
+            return key;
+        }
+public static void ArrangeButtons()
         {
             int origWidth = Console.WindowWidth;
             int origHeight = Console.WindowHeight-2;
@@ -63,17 +72,38 @@ namespace NortonCommander
 
           //  Panel.Panel.PrintFirstRow (Local);
 
-            Menu.Menu MyMenu = new Menu.Menu("Deleting Files",new Drawing.Point(10,14),new Drawing.Point (45,7),0, "Delete 12 files ?") ;
-            Console.ReadKey();
-            MyMenu.EraseMenu();
+          
+            //Console.ReadKey();
+            //MyMenu.EraseMenu();
             //MyMenu.Draw( );
 
-
-           
-
-            Console.ReadKey();
+            // GetKey();
 
 
-        }
+            //Console.ReadKey();
+            //MyMenu.ChangeActiveButton();
+            //Console.ReadKey();
+
+            ConsoleKey MyKey;
+
+            do
+            {
+
+                MyKey = Program.GetKey().Key;
+
+                switch (MyKey)
+                {
+                    case ConsoleKey.F8:
+                        Menu.Menu MyMenu = new Menu.Menu("Deleting Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Delete 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
+                        break;
+                }
+            }
+            while (MyKey != ConsoleKey.Escape);
+
+        
+
+
+
+    }
     }
 }

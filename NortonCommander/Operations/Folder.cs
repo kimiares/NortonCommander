@@ -3,46 +3,81 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NortonCommander.Operations
 {
     class Folder
     {
-        private void Delete(string path)
+        public static void Delete(params FileSystemInfo[] directory)
         {
 
-            
-            if (Directory.Exists(path))
+            if (directory.Length != 0)
             {
-                Directory.Delete(path);
+                foreach(var d in directory)
+                {
+                    if (Directory.Exists(d.FullName))
+                    {
+                        Directory.Delete(d.FullName, true);
+                    }
+                }
             }
-
-
-
+            
         }
-        public void Create(string path)
+        public static void Create(string path)
         {
             DirectoryInfo directory = new DirectoryInfo(path);
             directory.Create();
 
         }
-        public void Rename()
+        public static void Rename(FileSystemInfo directory, string newName)
         {
+            if (Directory.Exists(directory.Name))
+            {
+                Directory.Move(directory.Name, newName);
+            }
+        }
+       
+        public void CopyFolder(FileSystemInfo directory, string pathToCopy)
+        {
+            if (!Directory.Exists(pathToCopy))
+            {
+                Directory.CreateDirectory(pathToCopy);
 
-        }
-        public object[] Search(string mask, string path)
-        {
-           return Directory.GetFiles(path, mask, SearchOption.AllDirectories);
-            //print into panel
-        }
-        public void Copy()
-        {
+            }
+                
+            string[] files = Directory.GetFiles(directory.FullName);
+            foreach (string file in files)
+            {
+                string name = Path.GetFileName(file);
+                string dest = Path.Combine(pathToCopy, name);
+                File.Copy(file, dest);
+            }
 
+
+            DirectoryInfo di = new DirectoryInfo(directory.FullName);
+            DirectoryInfo[] folders = di.GetDirectories();
+            foreach (DirectoryInfo folder in folders)
+            {
+                string name = Path.GetFileName(folder.Name);
+                string dest = Path.Combine(pathToCopy, name);
+                CopyFolder(folder, dest);
+            }
         }
-        public string Info(DirectoryInfo directory)
+        public List<string> Info(FileSystemInfo directory)
         {
-            return $"{directory.Name}{directory.FullName}{directory.CreationTime}";
+            List<string> result = new List<string>();
+            if (
+                Directory.Exists(directory.FullName))
+            {
+                result.Add(directory.Name);
+                result.Add(directory.CreationTime.ToString());
+                result.Add(directory.LastWriteTime.ToString());
+                result.Add(directory.LastAccessTime.ToString());
+
+            }
+            return result;
         }
 
 

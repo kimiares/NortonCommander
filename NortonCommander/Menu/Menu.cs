@@ -7,26 +7,27 @@ using System.Threading.Tasks;
 
 namespace NortonCommander.Menu
 {
-     class Menu:Table
+     class Menu : Table
     {
         public string Text { get; set; }
         public bool ActiveButton { get; set; }
-     
-        public Menu(string name, Point a, Point b, int colcount, string text):base(name, a,b,colcount)
+        public bool GetKey { get; private set; }
+
+        public Menu(string name, Point a, Point b, int colcount, string text, ConsoleColor textcolor, ConsoleColor backcolor) :base(name, a,b,colcount, textcolor,backcolor)
         {
             
             Text = text;
             ActiveButton = false;
             ClearMenuField();
             AddButtons();
-            
+            Do();
         }
 
         public void AddButtons()
         {
             
-            Button.Button ButtonYes = new Button.Button("Yes",A.X+5 ,A.Y-1, ConsoleColor.Red,ConsoleColor=>ActiveButton ? ConsoleColor.Blue: ConsoleColor.White);
-            Button.Button ButtonNO = new Button.Button("No", B.X - 10, A.Y - 1, ConsoleColor.Red, ConsoleColor.White);
+            Button.Button ButtonYes = new Button.Button("Yes",A.X+5 ,A.Y-1, ConsoleColor.Red, ActiveButton ? ConsoleColor.Blue: ConsoleColor.White);
+            Button.Button ButtonNO = new Button.Button("No", B.X - 10, A.Y - 1, ConsoleColor.Red, ActiveButton ? ConsoleColor.White : ConsoleColor.Blue);
             ButtonYes.Draw();
             ButtonNO.Draw();
         }
@@ -53,10 +54,29 @@ namespace NortonCommander.Menu
         }
 
         public void ChangeActiveButton()
-        { 
-        
+        {
+            ActiveButton = !ActiveButton;
+            AddButtons();
         }
 
+        public void Do()
+        {
+            ConsoleKey MyKey;
+           
+            do
+            {
+                MyKey = Program.GetKey().Key;
+
+                switch (MyKey)
+                {
+                    case ConsoleKey.Tab:
+                        ChangeActiveButton();
+                        break;
+                }
+            }
+            while (MyKey != ConsoleKey.Enter);
+            EraseMenu();
+        }
 
     }
 }

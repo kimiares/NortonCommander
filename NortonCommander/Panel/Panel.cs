@@ -27,8 +27,8 @@ namespace NortonCommander.Panel
             Point secondStart = new Point((ConsoleWidth / 2 + 1), firstStart.Y);
             Point secondFinish = new Point(ConsoleWidth-1, firstFinish.Y);
             
-            Table firstTable = new Table(Panel1Name, firstStart, firstFinish, colcount);
-            Table secondTable = new Table(Panel2Name,secondStart, secondFinish, colcount);
+            Table firstTable = new Table(Panel1Name, firstStart, firstFinish, colcount, ConsoleColor.Blue, ConsoleColor.Black);
+            Table secondTable = new Table(Panel2Name,secondStart, secondFinish, colcount, ConsoleColor.Blue, ConsoleColor.Black);
          }
 
 

@@ -132,6 +132,21 @@ namespace NortonCommander.Operations
 
         }
 
+
+
+        public static List<FileSystemInfo> GetFiles(string path)
+        {
+            List<FileSystemInfo> result = new List<FileSystemInfo>();
+            DirectoryInfo dir = new DirectoryInfo(path);
+            FileInfo[] files = dir.GetFiles();
+
+            foreach (FileInfo file in files)
+            {
+                result.Add(file);
+            }
+            return result;
+        }
+
         /*Search,
     Compare,
     Info,

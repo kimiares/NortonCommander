@@ -80,6 +80,18 @@ namespace NortonCommander.Operations
             return result;
         }
 
+        public static List<FileSystemInfo> GetFolders(string path)
+        {
+            List<FileSystemInfo> result = new List<FileSystemInfo>();
+            DirectoryInfo dir = new DirectoryInfo(path);
+            DirectoryInfo[] folders = dir.GetDirectories();
+            foreach (DirectoryInfo fol in folders)
+            {
+                result.Add(fol);
+            }
+            return result;
+        }
+
 
         /*Search,
     Compare,

@@ -13,7 +13,13 @@ namespace NortonCommander.Operations
         {
             return DriveInfo.GetDrives().ToList();
         }
+        public static string GetFirstDiskPath()
+        {
+            List<DriveInfo> allDisk = DiskList();
+            DriveInfo currentDrive = allDisk[0];
 
+            return currentDrive.Name;
+        }
         
         
 

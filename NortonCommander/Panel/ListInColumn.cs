@@ -9,7 +9,8 @@ namespace NortonCommander.Panel
     class ListInColumn
     {
         public IList<object> Items;
-        internal int selectedIndex =0;
+        public int selectedIndex=0;
+        public int maxCountList = 24;
         public int startX;
         public int startY;
 
@@ -22,10 +23,8 @@ namespace NortonCommander.Panel
             }
             set
             {
+                value = Math.Abs(value % Items.Count);
                 selectedIndex = value;
-                if (value < 0) selectedIndex = Panel.CountVerticalLines;
-                if (value > Panel.CountVerticalLines) selectedIndex = 0;
-
                 Draw(this.startX, this.startY);
             }
         }
@@ -44,7 +43,6 @@ namespace NortonCommander.Panel
             this.Items = items;
             this.startX = x;
             this.startY = y;
-            Draw(this.startX, this.startY);
         }
         private void Draw(int x, int y)
         {
@@ -55,6 +53,8 @@ namespace NortonCommander.Panel
                 Console.SetCursorPosition(x, y+i);
                 if (i == selectedIndex)
                 {
+                    
+
                     var tmp = Console.BackgroundColor;
                     Console.BackgroundColor = Console.ForegroundColor;
                     Console.ForegroundColor = tmp;
@@ -62,12 +62,28 @@ namespace NortonCommander.Panel
                     
                     Console.ForegroundColor = Console.BackgroundColor;
                     Console.BackgroundColor = tmp;
+
+
+
                 }
                 else
                 {
                     Console.WriteLine(Items[i]);
                 }
             }
+        }
+        public List<object> Check(List<object> list)
+        {
+            
+            if(list.Count> maxCountList)
+            {
+                return list.Skip(maxCountList).ToList();
+            }
+            else
+            {
+                return list;
+            }
+
         }
         
     }

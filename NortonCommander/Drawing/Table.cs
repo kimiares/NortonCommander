@@ -11,23 +11,29 @@ namespace NortonCommander.Drawing
     {
 
         internal List<Line> Lines;
+        public Point A { get; set; } // Левый нижний угол
+        public Point B { get; set; } // правый верхний угол
+        public int ColCount { get; set; } // количество колонок
+        public ConsoleColor TextColor { get; set; } 
+        public ConsoleColor BackColor { get; set; }
 
-       
-        public List<Line> LinesInitializer(Point a, Point b, int ColCount)
+        public string Name { get; set; }
+
+        public List<Line> LinesInitializer()
         {
             List<Line> lines = new List<Line>()
             {
-                new Line(a, new Point(b.X, a.Y)),
-                new Line(new Point(b.X, a.Y), b),
-                new Line(b, new Point(a.X, b.Y)),
-                new Line(new Point(a.X, b.Y), a)
+                new Line(A, new Point(B.X, A.Y)),
+                new Line(new Point(B.X, A.Y), B),
+                new Line(B, new Point(A.X, B.Y)),
+                new Line(new Point(A.X, B.Y), A)
             };
             if (ColCount > 1)
             {
-                int ColumnWidth = (b.X - a.X) / ColCount;
+                int ColumnWidth = (B.X - A.X) / ColCount;
                 for (int i = 1; i < ColCount; i++)
                 {
-                    lines.Add(new Line(new Point(a.X + i*ColumnWidth, a.Y), new Point((a.X + i*ColumnWidth), b.Y)));
+                    lines.Add(new Line(new Point(A.X + i*ColumnWidth, A.Y), new Point((A.X + i*ColumnWidth), B.Y)));
                 }
             }
             return lines;
@@ -52,12 +58,17 @@ namespace NortonCommander.Drawing
             return PointForTCorners;
         }
 
-        public Table(Point a, Point b, int colcount)
+        public Table(string name, Point a, Point b, int colcount)
         {
-            Lines = LinesInitializer(a, b, colcount);
+            Name = name;
+            ColCount = colcount;
+            A = a;
+            B = b;
+            Lines = LinesInitializer();
             Draw();
             DrawCorners(GetCornersPoint());
-            DrawTCorners(GetTCornersPoint(), a.Y);
+            DrawTCorners(GetTCornersPoint());
+            AddTableName();
 
         }
         public virtual void Draw()
@@ -68,6 +79,13 @@ namespace NortonCommander.Drawing
             }
          }
 
+        public void AddTableName()
+        {
+            Console.SetCursorPosition(A.X+(B.X-A.X)/2  - Name.Length/2, B.Y);
+            Console.Write(Name);
+
+        }
+
         public void DrawCorners(List<Point> Points)
         {
             foreach (Point point in Points)
@@ -77,13 +95,13 @@ namespace NortonCommander.Drawing
             }
         }
 
-        public void DrawTCorners(List<Point> Points, int Height)
+        public void DrawTCorners(List<Point> Points)
         {
             foreach (Point point in Points)
             {
                 Console.SetCursorPosition(point.X, point.Y);
                 Console.Write(Corner.TCorners[0]);
-                Console.SetCursorPosition(point.X, Height);
+                Console.SetCursorPosition(point.X, A.Y);
                 Console.Write(Corner.TCorners[1]);
 
             }

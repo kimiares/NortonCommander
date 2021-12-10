@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NortonCommander.Menu;
+using System;
 using System.Collections.Generic;
 
 
@@ -49,17 +50,28 @@ namespace NortonCommander
 
         static void Main(string[] args)
         {
-            List<object> menu = new List<object> { "word1", "word2", "word3", "word3" , "word3" , "word3" , "word3" , 
-                "word3" , "word3" , "word3" , "word3" , "word3" , "word3" , "word3" , "word3" , "word3" };
-
+            List<object> menu = new List<object>();
+            for (int i = 0; i < 100; i++)
+                menu.Add("word"+i.ToString());
+            
             Console.ResetColor();
             ArrangeButtons();
-            
-            Panel.Panel.PanelInitializer(3);
-            
-            Panel.Panel.PrintFirstRow(menu);
+
+            List<object> Local = Panel.Panel.GetLocalList(menu, 95);
+
+            Panel.Panel.PanelInitializer(3, @"C:\\",@"D:\\");
+
+          //  Panel.Panel.PrintFirstRow (Local);
+
+            Menu.Menu MyMenu = new Menu.Menu("Deleting Files",new Drawing.Point(10,14),new Drawing.Point (45,7),0, "Delete 12 files ?") ;
+            Console.ReadKey();
+            MyMenu.EraseMenu();
+            //MyMenu.Draw( );
 
 
+           
+
+            Console.ReadKey();
 
 
         }

@@ -1,6 +1,9 @@
 ﻿using NortonCommander.Drawing;
+using NortonCommander.Operations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,6 +119,124 @@ namespace NortonCommander.Panel
 
 
         
+
+
+
+
+
+    }
+    public class Panel1
+    {
+        public static int PanelHeight = Console.WindowHeight;
+        public static int PanelWidth = Console.WindowWidth;
+        public int colCount;
+        public string Name { get; set; }
+        public ConsoleColor textColor { get; set; }
+        public ConsoleColor backColor { get; set; }
+        public int selectedObjectIndex = 0;
+        public int firstObjectIndex = 0;
+        public int maxObjectsPanel = PanelHeight - 1;
+        public bool Active { get; set; }
+        
+        
+        // отрисовка
+        public Panel1(Point a, Point b, int ColCount)
+        {
+            new Table(a,b,ColCount);
+
+            // начальная инициализация контента
+            
+        }
+
+        //все, что выводится в панели
+        List<FileSystemInfo> objects = new List<FileSystemInfo>();
+
+        //начальная иницализация, можно диски закинуть, можно все файлы с первого диска(проще)
+        public void SetContentInitial()
+        {
+
+            //this.objects.Add(Disk.DiskList());
+        }
+
+
+        // инициализация с путем
+        public void SetContent(string path) // адрес диска
+        {
+            //запихнуть в файлы/папки
+            DirectoryInfo dir = new DirectoryInfo(path);
+            
+            DirectoryInfo[] folders = dir.GetDirectories();
+            foreach (DirectoryInfo fol in folders)
+            {
+                this.objects.Add(dir);
+            }
+
+            FileInfo[] files = dir.GetFiles();
+            
+            foreach (FileInfo file in files)
+            {
+                this.objects.Add(file);
+            }
+
+        }
+
+
+        public void PrintObjects(List<FileSystemInfo> list)
+        {
+            foreach(FileSystemInfo f in this.objects)
+            {
+                //выводим
+            }
+        }
+
+        //обновить данные в панели или саму панель?
+        public void RefreshPanel()
+        {
+            //если меню было и нет
+        }
+
+        //при изменении объектов в колонке нужно закрасить действующие, а потом выводить
+        
+        
+        //перенести в тейбл
+        public void RefreshContent()
+        {
+            for (int i = 1; i < maxObjectsPanel; i++)
+            {
+              //  Console.SetCursorPosition(//начало колонки, там где текст);
+              //  Console.Write(new String(' ', //ширина колонки);
+            }
+
+        }
+
+        public void SwitchPanel()
+        {
+            if (this.Active)
+            {
+
+            }
+        }
+
+        //при нажатии энтера мы либо открываем, либо запускаем*
+        
+        // в класс повыше
+        public void OpenOrRunObject(FileSystemInfo file)
+        {
+            
+            
+            if(file is DirectoryInfo)
+            {
+                Directory.GetDirectories(file.FullName);
+                //PrintObjects();
+            }
+            if(file is FileInfo)
+            {
+                Process.Start(file.FullName);
+            }
+        }
+
+
+
 
 
 

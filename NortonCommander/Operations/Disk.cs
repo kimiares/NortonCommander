@@ -9,7 +9,7 @@ namespace NortonCommander.Operations
 {
     class Disk
     {
-        public List<DriveInfo> DiskList()
+        public static List<DriveInfo> DiskList()
         {
             return DriveInfo.GetDrives().ToList();
         }

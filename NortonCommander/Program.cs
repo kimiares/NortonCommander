@@ -75,9 +75,9 @@ namespace NortonCommander
 
             //тест
 
-            Panel.PanelFunctions[] MyPanels = new Panel.PanelFunctions[2];
-            MyPanels[0] = new Panel.PanelFunctions(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
-            MyPanels[1] = new Panel.PanelFunctions(@"C:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, true);
+            Panel.Panel[] MyPanels = new Panel.Panel[2];
+            MyPanels[0] = new Panel.Panel(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
+            MyPanels[1] = new Panel.Panel(@"D:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, true);
            
            
             
@@ -116,24 +116,7 @@ namespace NortonCommander
             }
             while (MyKey != ConsoleKey.Escape);
 
-            //arrow = Console.ReadKey(true);
-            //switch (arrow.Key)
-            //{
-            //    case ConsoleKey.UpArrow:
-            //        selectedObjectIndex--;
-            //        if (selectedObjectIndex == -1) selectedObjectIndex = list.Count - 1;
-            //        break;
-            //    case ConsoleKey.DownArrow:
-            //        selectedObjectIndex++;
-            //        if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
-            //        break;
-            //    case ConsoleKey.Enter:
-            //    //Commander.OpenOrRunObject();
-            //        break;
-
-            //    default:
-            //        break;
-            //}
+           
 
 
 

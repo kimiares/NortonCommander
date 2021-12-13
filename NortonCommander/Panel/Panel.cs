@@ -1,6 +1,8 @@
 ﻿using NortonCommander.Drawing;
+using NortonCommander.Operations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,69 +10,172 @@ using System.Threading.Tasks;
 
 namespace NortonCommander.Panel
 {
-    public class Panel
+     class Panel:Table
     {
-        public static int ConsoleHeight = Console.WindowHeight;
-        public static int ConsoleWidth = Console.WindowWidth;
-        public static int CountVerticalLines = ConsoleHeight - 6;
-        public int SelectedIndex;
 
-        public ConsoleColor TextColor { get; set; }
-        public ConsoleColor BackColor { get; set; }
+        public static int PanelHeight = Console.WindowHeight;
+        public static int PanelWidth = Console.WindowWidth;
+        public static int maxObjectsPanel = PanelHeight - 6;
+        public static int columnWidth = PanelWidth / 6; //ширина консоли/колво панелей/колво столбцов
+        public static Point columnFirstStart;// = new Point(2, 2);
+        //public static Point columnSecondPoint;
+        //public static Point columnThirdPoint;
 
-        public static void PanelInitializer(int colcount, string Panel1Name, string Panel2Name)
+        public static int selectedObjectIndex = 0;
+       
+        public int firstObjectIndex = 0;
+        
+        public bool Active { get; set; }
+
+
+        // отрисовка
+        public Panel(string name, Point a, Point b, int colcount, ConsoleColor textColor, ConsoleColor backColor, bool active) 
+            : base(name, a, b, colcount,  textColor,  backColor)
         {
-            //Console.SetWindowSize(120, 30);
-            //Console.SetBufferSize(120, 30);
-            Point firstStart = new Point(0, ConsoleHeight-4);
-            Point firstFinish = new Point(ConsoleWidth / 2 - 1, 1);
-
-            Point secondStart = new Point((ConsoleWidth / 2 + 1), firstStart.Y);
-            Point secondFinish = new Point(ConsoleWidth-1, firstFinish.Y);
+            columnFirstStart = new Point(a.X + 2, 2);  
             
-            Table firstTable = new Table(Panel1Name, firstStart, firstFinish, colcount, ConsoleColor.Blue, ConsoleColor.Black);
-            Table secondTable = new Table(Panel2Name,secondStart, secondFinish, colcount, ConsoleColor.Blue, ConsoleColor.Black);
-         }
+            this.Active = active;
+            SetContent();
+
+            // начальная инициализация контента
+
+        }
+
+        //все, что выводится в панели
+        List<FileSystemInfo> objects = new List<FileSystemInfo>();
 
 
-        public static List<object> GetLocalList(List<object> InfoLIst, int CurrentIndex)
+        public void Move(bool direction)
         {
-            List<object> myList = new List<object>();
-            if ((CurrentIndex + CountVerticalLines) > InfoLIst.Count)
-            { CurrentIndex = InfoLIst.Count - CountVerticalLines; }
-            
-            for (int i = CurrentIndex; i < CurrentIndex + CountVerticalLines; i++)
+           
+            if (direction) selectedObjectIndex++;
+            else
+                selectedObjectIndex--;
+
+
+        }
+
+        // инициализация с первого диска 
+        public void SetContent()
+        {
+            if (this.Active)
             {
-                myList.Add(InfoLIst[i]);
+                //Console.Clear();
+                string path = Disk.GetFirstDiskPath();
+                this.objects.Clear();
+                this.objects.AddRange(Folder.GetFolders(path));
+                this.objects.AddRange(Files.GetFiles(path));
+                //Panel.PrintFirstRow(this.objects);
+                PrintObjects(this.objects);//, this.selectedObjectIndex);
             }
-            return myList;
+
+
         }
 
-        public static void PrintFirstRow(List<FileSystemInfo> list)
+        //если меньше чем максимум - просто выводим
+        public static void PrintObjects(List<FileSystemInfo> list)//, int selectedObjectIndex)
         {
-            //from menu
-            ListInColumn consoleMenu = new ListInColumn(list, 2,2);
-            
-            ConsoleKeyInfo arrow;
-            do
-            {
-                arrow = Console.ReadKey(true);
-                switch (arrow.Key)
+
+            List<FileSystemInfo> temp = new();
+            //    ConsoleKeyInfo arrow;
+             if (selectedObjectIndex == -1) selectedObjectIndex =  list.Count - 1;
+            if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
+            //   do
+            //   {
+            for (int i = 0; i < list.Count; i++)
                 {
-                    case ConsoleKey.UpArrow:
-                        consoleMenu.SelectedIndex--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        consoleMenu.SelectedIndex++;
-                        break;
-                case ConsoleKey.Enter:
-                    //DoAction(SelectedIndex);
-                    break;
-                default:
-                        break;
-               }
-            } while (arrow.Key != ConsoleKey.Enter);
-            Console.Clear();
+                    Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
+                    if (i == selectedObjectIndex)
+                    {
+                        
+                        var tmp = Console.BackgroundColor;
+                        Console.BackgroundColor = Console.ForegroundColor;
+                        Console.ForegroundColor = tmp;
+                        
+                        Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
+                        Console.Write(list[i].Name);
+
+                        
+
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write(list[i].Name);
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
+                        Console.Write(list[i].CreationTime.Date);
+
+                       
+                    }
+
+
+                    //if (selectedObjectIndex == maxObjectsPanel)
+                    //{
+                    //    temp = list.Skip(maxObjectsPanel).ToList();
+                    //    PrintObjects(temp);
+                    //}
+                }
+               
+            
+
+
         }
-     }
+
+        public static void SelectObject()
+        {
+           
+        }
+
+        public static List<FileSystemInfo> GetLocalList(List<FileSystemInfo> list, int currentIndex)
+        {
+            List<FileSystemInfo> resultList = new List<FileSystemInfo>();
+            if ((currentIndex + maxObjectsPanel) > list.Count)
+            { currentIndex = list.Count - maxObjectsPanel; }
+
+            for (int i = currentIndex; i < currentIndex + maxObjectsPanel; i++)
+            {
+                resultList.Add(list[i]);
+            }
+            return resultList;
+        }
+
+        //обновить данные в панели или саму панель?
+        public void RefreshPanel()
+        {
+
+
+            //если меню было и нет
+        }
+
+        //при изменении объектов в колонке нужно закрасить действующие, а потом выводить
+
+
+        //перенести в тейбл?
+        //заливает все строки столбца пробелами
+        public void RefreshContent()
+        {
+            for (int i = 1; i < maxObjectsPanel; i++)
+            {
+                Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y);
+                Console.Write(new String(' ', columnWidth));
+            }
+
+        }
+
+        public void SwitchPanel()
+        {
+            if (this.Active)
+            {
+                this.Active = !Active;
+            }
+        }
+
+       
+       
+
+
+
+
+
+    }
 }

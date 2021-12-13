@@ -65,21 +65,25 @@ namespace NortonCommander.Drawing
             TextColor = textcolor;
             BackColor = backcolor;
             Lines = LinesInitializer();
-            Console.BackgroundColor = BackColor;
-            Console.ForegroundColor = TextColor;
             Draw();
-            DrawCorners(GetCornersPoint());
-            DrawTCorners(GetTCornersPoint());
-            AddTableName();
+           
+            
             Console.ResetColor();
         }
         public virtual void Draw()
         {
-             foreach (Line line in Lines)
+            Console.BackgroundColor = BackColor;
+            Console.ForegroundColor = TextColor;
+           
+            foreach (Line line in Lines)
             {
                 line.Draw();
             }
-          }
+            DrawCorners(GetCornersPoint());
+            DrawTCorners(GetTCornersPoint());
+            AddTableName();
+
+        }
 
         public void AddTableName()
         {

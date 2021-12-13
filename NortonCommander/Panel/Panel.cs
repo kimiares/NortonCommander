@@ -66,28 +66,25 @@ namespace NortonCommander.Panel
                 this.objects.AddRange(Folder.GetFolders(path));
                 this.objects.AddRange(Files.GetFiles(path));
                 //Panel.PrintFirstRow(this.objects);
-                PrintObjects(this.objects);//, this.selectedObjectIndex);
+                PrintObjects(this.objects);
             }
 
 
         }
 
         //если меньше чем максимум - просто выводим
-        public static void PrintObjects(List<FileSystemInfo> list)//, int selectedObjectIndex)
+        public static void PrintObjects(List<FileSystemInfo> list)
         {
 
             List<FileSystemInfo> temp = new();
-            //    ConsoleKeyInfo arrow;
-             if (selectedObjectIndex == -1) selectedObjectIndex =  list.Count - 1;
+            if (selectedObjectIndex == -1) selectedObjectIndex =  list.Count - 1;
             if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
-            //   do
-            //   {
-            for (int i = 0; i < maxObjectsPanel; i++)
+
+            for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count:maxObjectsPanel); i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                     if (i == selectedObjectIndex)
                     {
-                        
                         var tmp = Console.BackgroundColor;
                         Console.BackgroundColor = Console.ForegroundColor;
                         Console.ForegroundColor = tmp;
@@ -95,9 +92,6 @@ namespace NortonCommander.Panel
                         Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                         //Console.Write(list[i].Name);
                         Console.WriteLine(CutName(list[i].Name, columnWidth-4));
-
-                        
-
                         Console.ResetColor();
                     }
                     else
@@ -107,8 +101,6 @@ namespace NortonCommander.Panel
                         Console.Write(list[i].CreationTime.ToShortDateString());
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth*2, columnFirstStart.Y + i);
                         Console.Write(list[i].CreationTime.ToShortTimeString());
-
-
                 }
 
 

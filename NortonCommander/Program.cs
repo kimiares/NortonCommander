@@ -74,22 +74,16 @@ namespace NortonCommander
 
 
             //тест
-            Panel.PanelFunctions panel1 = new Panel.PanelFunctions(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
-            Panel.PanelFunctions panel2 = new Panel.PanelFunctions(@"D:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, false);
-            //  Panel.Panel.PrintFirstRow (Local);
 
-
-            //Console.ReadKey();
-            //MyMenu.EraseMenu();
-            //MyMenu.Draw( );
-
-            // GetKey();
-
-
-            //Console.ReadKey();
-            //MyMenu.ChangeActiveButton();
-            //Console.ReadKey();
-
+            Panel.PanelFunctions[] MyPanels = new Panel.PanelFunctions[2];
+            MyPanels[0] = new Panel.PanelFunctions(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
+            MyPanels[1] = new Panel.PanelFunctions(@"C:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, true);
+           
+           
+            
+            
+            
+         
             ConsoleKey MyKey;
 
             do
@@ -106,16 +100,43 @@ namespace NortonCommander
                         Menu.Menu MyMenu5 = new Menu.Menu("Copy Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Copy 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
                         break;
                     case ConsoleKey.Escape:
-                        
+                    case ConsoleKey.UpArrow:
+                        MyPanels[0].Move(false);
+                        MyPanels[0].SetContent();
+                    break;
+                    case ConsoleKey.DownArrow:
+                        MyPanels[0].Move(true);
+                        MyPanels[0].SetContent();
                         break;
+                    case ConsoleKey.Enter:
+                     // Commander.OpenOrRunObject();
+                        break;
+
                 }
             }
             while (MyKey != ConsoleKey.Escape);
 
-        
+            //arrow = Console.ReadKey(true);
+            //switch (arrow.Key)
+            //{
+            //    case ConsoleKey.UpArrow:
+            //        selectedObjectIndex--;
+            //        if (selectedObjectIndex == -1) selectedObjectIndex = list.Count - 1;
+            //        break;
+            //    case ConsoleKey.DownArrow:
+            //        selectedObjectIndex++;
+            //        if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
+            //        break;
+            //    case ConsoleKey.Enter:
+            //    //Commander.OpenOrRunObject();
+            //        break;
+
+            //    default:
+            //        break;
+            //}
 
 
 
-    }
+        }
     }
 }

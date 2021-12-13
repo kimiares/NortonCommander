@@ -1,6 +1,5 @@
 ﻿using NortonCommander.Drawing;
 using NortonCommander.Operations;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,11 +17,12 @@ namespace NortonCommander.Panel
         public static int PanelWidth = Console.WindowWidth;
         public static int maxObjectsPanel = PanelHeight - 6;
         public static int columnWidth = PanelWidth / 6; //ширина консоли/колво панелей/колво столбцов
-        public static Point columnFirstStart = new Point(2, 2);
+        public static Point columnFirstStart;// = new Point(2, 2);
         //public static Point columnSecondPoint;
         //public static Point columnThirdPoint;
 
         public static int selectedObjectIndex = 0;
+       
         public int firstObjectIndex = 0;
         
         public bool Active { get; set; }
@@ -32,7 +32,8 @@ namespace NortonCommander.Panel
         public PanelFunctions(string name, Point a, Point b, int colcount, ConsoleColor textColor, ConsoleColor backColor, bool active) 
             : base(name, a, b, colcount,  textColor,  backColor)
         {
-
+            columnFirstStart = new Point(a.X + 2, 2);  
+            
             this.Active = active;
             SetContent();
 
@@ -44,33 +45,44 @@ namespace NortonCommander.Panel
         List<FileSystemInfo> objects = new List<FileSystemInfo>();
 
 
+        public void Move(bool direction)
+        {
+           
+            if (direction) selectedObjectIndex++;
+            else
+                selectedObjectIndex--;
 
+
+        }
 
         // инициализация с первого диска 
         public void SetContent()
         {
             if (this.Active)
             {
+                //Console.Clear();
                 string path = Disk.GetFirstDiskPath();
+                this.objects.Clear();
                 this.objects.AddRange(Folder.GetFolders(path));
                 this.objects.AddRange(Files.GetFiles(path));
                 //Panel.PrintFirstRow(this.objects);
-                PrintObjects(this.objects);
+                PrintObjects(this.objects);//, this.selectedObjectIndex);
             }
 
 
         }
 
         //если меньше чем максимум - просто выводим
-        public static void PrintObjects(List<FileSystemInfo> list)
+        public static void PrintObjects(List<FileSystemInfo> list)//, int selectedObjectIndex)
         {
 
             List<FileSystemInfo> temp = new();
-            ConsoleKeyInfo arrow;
-            
-            do
-            {
-                for (int i = 0; i < list.Count; i++)
+            //    ConsoleKeyInfo arrow;
+             if (selectedObjectIndex == -1) selectedObjectIndex =  list.Count - 1;
+            if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
+            //   do
+            //   {
+            for (int i = 0; i < list.Count; i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                     if (i == selectedObjectIndex)
@@ -93,8 +105,7 @@ namespace NortonCommander.Panel
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
                         Console.Write(list[i].CreationTime);
 
-                        Console.SetCursorPosition(columnFirstStart.X + columnWidth * 2, columnFirstStart.Y + i);
-                        Console.WriteLine(list[i].Exists);
+                       
                     }
 
 
@@ -104,31 +115,12 @@ namespace NortonCommander.Panel
                     //    PrintObjects(temp);
                     //}
                 }
-                arrow = Console.ReadKey(true);
-                switch (arrow.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        selectedObjectIndex--;
-                        if (selectedObjectIndex == -1) selectedObjectIndex = list.Count - 1;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        selectedObjectIndex++;
-                        if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
-                        break;
-                    case ConsoleKey.Enter:
-                    //Commander.OpenOrRunObject();
-                        break;
-
-                    default:
-                        break;
-                }
-
-            } while (arrow.Key != ConsoleKey.Enter);
-                Console.Clear();
+               
             
 
 
         }
+
         public static void SelectObject()
         {
            
@@ -150,6 +142,8 @@ namespace NortonCommander.Panel
         //обновить данные в панели или саму панель?
         public void RefreshPanel()
         {
+
+
             //если меню было и нет
         }
 

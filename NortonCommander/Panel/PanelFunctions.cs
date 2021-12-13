@@ -1,5 +1,6 @@
 ﻿using NortonCommander.Drawing;
 using NortonCommander.Operations;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,22 +17,23 @@ namespace NortonCommander.Panel
         public static int PanelHeight = Console.WindowHeight;
         public static int PanelWidth = Console.WindowWidth;
         public static int maxObjectsPanel = PanelHeight - 6;
-        public static int columnWidth;
-        public static Point columnStartPoint;
+        public static int columnWidth = PanelWidth / 6; //ширина консоли/колво панелей/колво столбцов
+        public static Point columnFirstStart = new Point(2, 2);
+        //public static Point columnSecondPoint;
+        //public static Point columnThirdPoint;
 
-        public int selectedObjectIndex = 0;
+        public static int selectedObjectIndex = 0;
         public int firstObjectIndex = 0;
         
         public bool Active { get; set; }
 
 
         // отрисовка
-        public PanelFunctions(string name, Point a, Point b, int colcount, ConsoleColor textColor, ConsoleColor backColor) 
+        public PanelFunctions(string name, Point a, Point b, int colcount, ConsoleColor textColor, ConsoleColor backColor, bool active) 
             : base(name, a, b, colcount,  textColor,  backColor)
         {
 
-            //this.textColor = textColor;
-            //this.backColor = backColor;
+            this.Active = active;
             SetContent();
 
             // начальная инициализация контента
@@ -47,40 +49,91 @@ namespace NortonCommander.Panel
         // инициализация с первого диска 
         public void SetContent()
         {
-            string path = Disk.GetFirstDiskPath();
-            this.objects.AddRange(Folder.GetFolders(path));
-            this.objects.AddRange(Files.GetFiles(path));
-            PrintObjects(this.objects);
+            if (this.Active)
+            {
+                string path = Disk.GetFirstDiskPath();
+                this.objects.AddRange(Folder.GetFolders(path));
+                this.objects.AddRange(Files.GetFiles(path));
+                //Panel.PrintFirstRow(this.objects);
+                PrintObjects(this.objects);
+            }
+
 
         }
 
-        //если меньше чем максимум - просто выводим, если больше - выводим 
-        public void PrintObjects(List<FileSystemInfo> list)
+        //если меньше чем максимум - просто выводим
+        public static void PrintObjects(List<FileSystemInfo> list)
         {
 
             List<FileSystemInfo> temp = new();
-            for (int i = 0; i < list.Count; i++)
+            ConsoleKeyInfo arrow;
+            
+            do
+            {
+                for (int i = 0; i < list.Count; i++)
                 {
-                Console.SetCursorPosition(columnStartPoint.X, columnStartPoint.Y + i);
+                    Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                     if (i == selectedObjectIndex)
                     {
+                        
                         var tmp = Console.BackgroundColor;
                         Console.BackgroundColor = Console.ForegroundColor;
                         Console.ForegroundColor = tmp;
-                        Console.WriteLine(list[i].Name);
-                        Console.ForegroundColor = Console.BackgroundColor;
-                        Console.BackgroundColor = tmp;
+                        
+                        Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
+                        Console.Write(list[i].Name);
+
+                        
+
+                        Console.ResetColor();
                     }
-                Console.WriteLine(list[i].Name);
-                if (i == maxObjectsPanel)
+                    else
+                    {
+                        Console.Write(list[i].Name);
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
+                        Console.Write(list[i].CreationTime);
+
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth * 2, columnFirstStart.Y + i);
+                        Console.WriteLine(list[i].Exists);
+                    }
+
+
+                    //if (selectedObjectIndex == maxObjectsPanel)
+                    //{
+                    //    temp = list.Skip(maxObjectsPanel).ToList();
+                    //    PrintObjects(temp);
+                    //}
+                }
+                arrow = Console.ReadKey(true);
+                switch (arrow.Key)
                 {
-                    temp = list.Skip(maxObjectsPanel).ToList();
-                    PrintObjects(temp);
+                    case ConsoleKey.UpArrow:
+                        selectedObjectIndex--;
+                        if (selectedObjectIndex == -1) selectedObjectIndex = list.Count - 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        selectedObjectIndex++;
+                        if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
+                        break;
+                    case ConsoleKey.Enter:
+                    //Commander.OpenOrRunObject();
+                        break;
+
+                    default:
+                        break;
                 }
-                }
+
+            } while (arrow.Key != ConsoleKey.Enter);
+                Console.Clear();
             
-            
+
+
         }
+        public static void SelectObject()
+        {
+           
+        }
+
         public static List<FileSystemInfo> GetLocalList(List<FileSystemInfo> list, int currentIndex)
         {
             List<FileSystemInfo> resultList = new List<FileSystemInfo>();
@@ -109,7 +162,7 @@ namespace NortonCommander.Panel
         {
             for (int i = 1; i < maxObjectsPanel; i++)
             {
-                Console.SetCursorPosition(columnStartPoint.X, columnStartPoint.Y);
+                Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y);
                 Console.Write(new String(' ', columnWidth));
             }
 

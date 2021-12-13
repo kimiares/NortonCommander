@@ -60,6 +60,7 @@ namespace NortonCommander
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             List<object> menu = new List<object>();
             for (int i = 0; i < 100; i++)
                 menu.Add("word"+i.ToString());
@@ -70,8 +71,11 @@ namespace NortonCommander
             //List<object> Local = Panel.Panel.GetLocalList(menu, 95);
 
             //Panel.Panel.PanelInitializer(3, @"C:\\",@"D:\\");
-            Panel.PanelFunctions panel1 = new Panel.PanelFunctions(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black);
-            Panel.PanelFunctions panel2 = new Panel.PanelFunctions(@"D:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black);
+
+
+            //тест
+            Panel.PanelFunctions panel1 = new Panel.PanelFunctions(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
+            Panel.PanelFunctions panel2 = new Panel.PanelFunctions(@"D:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, false);
             //  Panel.Panel.PrintFirstRow (Local);
 
 

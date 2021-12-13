@@ -82,7 +82,7 @@ namespace NortonCommander.Panel
             if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
             //   do
             //   {
-            for (int i = 0; i < maxObjectsPanel; i++)
+            for (int i = 0; i < list.Count; i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                     if (i == selectedObjectIndex)

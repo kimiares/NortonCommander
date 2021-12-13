@@ -1,6 +1,7 @@
 ﻿using NortonCommander.Drawing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace NortonCommander.Panel
             return myList;
         }
 
-        public static void PrintFirstRow(List<object> list)
+        public static void PrintFirstRow(List<FileSystemInfo> list)
         {
             //from menu
             ListInColumn consoleMenu = new ListInColumn(list, 2,2);

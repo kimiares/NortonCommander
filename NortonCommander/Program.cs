@@ -1,4 +1,5 @@
-﻿using NortonCommander.Menu;
+﻿using NortonCommander.Drawing;
+using NortonCommander.Menu;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace NortonCommander
             while (key.Key==0) ;
             return key;
         }
-public static void ArrangeButtons()
+        public static void ArrangeButtons()
         {
             int origWidth = Console.WindowWidth;
             int origHeight = Console.WindowHeight-2;
@@ -59,6 +60,7 @@ public static void ArrangeButtons()
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             List<object> menu = new List<object>();
             for (int i = 0; i < 100; i++)
                 menu.Add("word"+i.ToString());
@@ -66,13 +68,17 @@ public static void ArrangeButtons()
             Console.ResetColor();
             ArrangeButtons();
 
-            List<object> Local = Panel.Panel.GetLocalList(menu, 95);
+            //List<object> Local = Panel.Panel.GetLocalList(menu, 95);
 
-            Panel.Panel.PanelInitializer(3, @"C:\\",@"D:\\");
+            //Panel.Panel.PanelInitializer(3, @"C:\\",@"D:\\");
 
-          //  Panel.Panel.PrintFirstRow (Local);
 
-          
+            //тест
+            Panel.PanelFunctions panel1 = new Panel.PanelFunctions(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
+            Panel.PanelFunctions panel2 = new Panel.PanelFunctions(@"D:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, false);
+            //  Panel.Panel.PrintFirstRow (Local);
+
+
             //Console.ReadKey();
             //MyMenu.EraseMenu();
             //MyMenu.Draw( );

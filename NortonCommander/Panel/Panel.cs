@@ -26,33 +26,24 @@ namespace NortonCommander.Panel
         public int firstObjectIndex = 0;
         
         public bool Active { get; set; }
-
-
         // отрисовка
         public Panel(string name, Point a, Point b, int colcount, ConsoleColor textColor, ConsoleColor backColor, bool active) 
             : base(name, a, b, colcount,  textColor,  backColor)
         {
             columnFirstStart = new Point(a.X + 2, 2);  
-            
             this.Active = active;
             SetContent();
-
             // начальная инициализация контента
-
         }
 
         //все, что выводится в панели
         List<FileSystemInfo> objects = new List<FileSystemInfo>();
 
-
         public void Move(bool direction)
         {
-           
             if (direction) selectedObjectIndex++;
             else
                 selectedObjectIndex--;
-
-
         }
 
         // инициализация с первого диска 
@@ -66,41 +57,47 @@ namespace NortonCommander.Panel
                 this.objects.AddRange(Folder.GetFolders(path));
                 this.objects.AddRange(Files.GetFiles(path));
                 //Panel.PrintFirstRow(this.objects);
+               
                 PrintObjects(this.objects);
             }
-
-
         }
 
+
+       
         //если меньше чем максимум - просто выводим
         public static void PrintObjects(List<FileSystemInfo> list)
         {
-
-            List<FileSystemInfo> temp = new();
+           
+            int sdvig = 0;
             if (selectedObjectIndex == -1) selectedObjectIndex =  list.Count - 1;
-            if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
 
-            for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count:maxObjectsPanel); i++)
+            if (selectedObjectIndex >= maxObjectsPanel)
+            {
+                
+                sdvig = Math.Abs(selectedObjectIndex - maxObjectsPanel);
+            }
+            if (selectedObjectIndex == list.Count)
+                selectedObjectIndex = 0;
+
+                for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count:maxObjectsPanel); i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
-                    if (i == selectedObjectIndex)
+                    if (i == selectedObjectIndex-sdvig)
                     {
                         var tmp = Console.BackgroundColor;
                         Console.BackgroundColor = Console.ForegroundColor;
                         Console.ForegroundColor = tmp;
-                        
                         Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
-                        //Console.Write(list[i].Name);
-                        Console.WriteLine(CutName(list[i].Name, columnWidth-4));
+                        Console.WriteLine(CutName(list[i+sdvig].Name, columnWidth-4));
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine(CutName(list[i].Name, columnWidth-4));
+                        Console.WriteLine(CutName(list[i+sdvig].Name, columnWidth-4));
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
-                        Console.Write(list[i].CreationTime.ToShortDateString());
+                        Console.Write(list[i+sdvig].CreationTime.ToShortDateString());
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth*2, columnFirstStart.Y + i);
-                        Console.Write(list[i].CreationTime.ToShortTimeString());
+                        Console.Write(list[i+sdvig].CreationTime.ToShortTimeString());
                 }
 
 
@@ -116,10 +113,7 @@ namespace NortonCommander.Panel
 
         }
 
-        public static void SelectObject()
-        {
-           
-        }
+    
 
         public static List<FileSystemInfo> GetLocalList(List<FileSystemInfo> list, int currentIndex)
         {
@@ -154,7 +148,6 @@ namespace NortonCommander.Panel
                 Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y);
                 Console.Write(new String(' ', columnWidth));
             }
-
         }
 
         public void SwitchPanel()

@@ -14,4 +14,10 @@ namespace NortonCommander.Drawing
         public static List<string> Corners = new List<string>() { "╚", "╝", "╗", "╔" };
         public static List<string> TCorners = new List<string>() { "╦", "╩" };
     }
+
+    public static class MenuName
+    {
+        public static List<string> MenuNames = new List<string>() { "Help", "Search", "Compare", "Information", "Сopying", "Renaming/Moving","Make Directory","Deletion", "Disk Information","Exit" };
+
+    }
 }

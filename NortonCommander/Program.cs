@@ -109,7 +109,7 @@ namespace NortonCommander
                         MyPanels[0].SetContent();
                         break;
                     case ConsoleKey.Enter:
-                     // Commander.OpenOrRunObject();
+                  //    Commander.OpenOrRunObject();
                         break;
 
                 }

@@ -57,71 +57,50 @@ namespace NortonCommander.Panel
                 this.objects.Clear();
                 this.objects.AddRange(Folder.GetFolders(path));
                 this.objects.AddRange(Files.GetFiles(path));
-                //Panel.PrintFirstRow(this.objects);
-               
                 PrintObjects(this.objects);
             }
         }
-
-
        
         //если меньше чем максимум - просто выводим
         public static void PrintObjects(List<FileSystemInfo> list)
         {
-           
-            int sdvig = 0;
+             int sdvig = 0;
             if (selectedObjectIndex == -1) selectedObjectIndex =  list.Count - 1;
 
             if (selectedObjectIndex >= maxObjectsPanel)
             {
                 
-                sdvig = Math.Abs(selectedObjectIndex - maxObjectsPanel);
+                sdvig = Math.Abs(selectedObjectIndex - maxObjectsPanel)+1;
             }
             if (selectedObjectIndex == list.Count)
+            {
                 selectedObjectIndex = 0;
-
+                sdvig = 0;
+            }
                 for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count:maxObjectsPanel); i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
-                    if (i == selectedObjectIndex)
-                    {
-                      
-                        var tmp = Console.BackgroundColor;
-                        Console.BackgroundColor = Console.ForegroundColor;
-                        Console.ForegroundColor = tmp;
-                        Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
-                        //Console.Write(list[i].Name);
-                        Console.WriteLine(CutName(list[i].Name, columnWidth-4));
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        Console.WriteLine(CutName(list[i].Name, columnWidth-4));
-                        Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
-                        Console.Write(list[i+sdvig].CreationTime.ToShortDateString());
-                        Console.SetCursorPosition(columnFirstStart.X + columnWidth*2, columnFirstStart.Y + i);
-                        Console.Write(list[i].CreationTime.ToShortTimeString());
-                }
-
-
-                    //if (selectedObjectIndex == maxObjectsPanel)
-                    //{
-                    //    temp = list.Skip(maxObjectsPanel).ToList();
-                    //    PrintObjects(temp);
-                    //}
-                }
                
-            
+                if (i == selectedObjectIndex - sdvig)
+                {
+                    var tmp = Console.BackgroundColor;
+                    Console.BackgroundColor = Console.ForegroundColor;
+                    Console.ForegroundColor = tmp;
+                }
+                        Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
+                        Console.WriteLine(CutName(list[i+sdvig].Name, columnWidth-4));
+                        Console.ResetColor();
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
+                        Console.Write(list[i + sdvig].CreationTime.ToShortDateString());
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth * 2, columnFirstStart.Y + i);
+                        Console.Write(list[i + sdvig].CreationTime.ToShortTimeString());
+                }
+         }
 
-
-        }
-
-        public static void SelectObject()
+        internal void OpenOrRunObject()
         {
-           
+            throw new NotImplementedException();
         }
-
-
 
         public static List<FileSystemInfo> GetLocalList(List<FileSystemInfo> list, int currentIndex)
         {

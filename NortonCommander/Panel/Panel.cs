@@ -26,7 +26,6 @@ namespace NortonCommander.Panel
             SelectedObjectIndex = 0;
             ColumnWidth = PanelWidth / 6;
             ColumnFirstStart = new Point(a.X + 2, 2);
-            //   this.Active = active;
             Path = name;
             SetContent();
             // начальная инициализация контента

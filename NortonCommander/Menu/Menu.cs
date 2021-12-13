@@ -28,6 +28,7 @@ namespace NortonCommander.Menu
             Button.Button ButtonNO = new Button.Button("No", B.X - 10, A.Y - 1, ConsoleColor.Red, ActiveButton ? ConsoleColor.White : ConsoleColor.Blue);
             ButtonYes.Draw();
             ButtonNO.Draw();
+            Console.ResetColor();
         }
 
         public void ClearMenuField()

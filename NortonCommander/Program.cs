@@ -46,35 +46,26 @@ namespace NortonCommander
                 {
                     result += " ";
                 }
-
-
             }
             if (Phrase.Length > Length)
             {
                 result = Phrase.Substring(0, Length);//, Phrase.Length-1);
             }
-
-
             return result;
         }
 
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-       
-            
             Console.ResetColor();
             ArrangeButtons();
-
-            
-
             //тест
 
             Panel.Panel[] MyPanels = new Panel.Panel[2];
             MyPanels[0] = new Panel.Panel(@"C:\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black);
             MyPanels[1] = new Panel.Panel(@"C:\Windows", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black);
             bool i = false;
-            int hhh = 0;
+            int my = 0;
             ConsoleKey MyKey;
             do
             {
@@ -82,11 +73,14 @@ namespace NortonCommander
 
                 switch (MyKey)
                 {
-                    case ConsoleKey.F8:
-                        Menu.Menu MyMenu8 = new Menu.Menu("Deleting Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Delete 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
-                        break;
-                    case ConsoleKey.F5:
-                        Menu.Menu MyMenu5 = new Menu.Menu("Copy Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Copy 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
+                    case ConsoleKey.F1:
+                        
+                    case ConsoleKey.F2:
+                    case ConsoleKey.F3:
+                        my = MyPanels[i ? 0 : 1].A.X;
+                    Menu.Menu MyMenu8 = new Menu.Menu("Deleting Files", new Drawing.Point(MyPanels[i ? 0 : 1].A.X+10, 14), new Drawing.Point(MyPanels[i ? 0 : 1].A.X+45, 7), 0, "Delete 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
+                        MyPanels[i ? 0 : 1].SetContent();
+                        MyPanels[i ? 0 : 1].Draw();
                         break;
                     case ConsoleKey.Escape:
                         break;
@@ -104,7 +98,6 @@ namespace NortonCommander
                         break;
                     case ConsoleKey.Tab:
                         i = !i;
-                        hhh = i ? 0 : 1;
                         break;
 
 

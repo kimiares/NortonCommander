@@ -73,6 +73,23 @@ namespace NortonCommander.Panel
 
         }
 
+        public void SetContent(string path)
+        {
+            if (this.Active && this.objects!=null)
+            {
+                RefreshContent();
+                this.objects.Clear();
+                this.objects.AddRange(Folder.GetFolders(path));
+                this.objects.AddRange(Files.GetFiles(path));
+                PrintObjects(this.objects);
+            }
+
+        }
+        public void UpdatedContent()
+        {
+
+        }
+
         //если меньше чем максимум - просто выводим
         public static void PrintObjects(List<FileSystemInfo> list)
         {
@@ -151,6 +168,7 @@ namespace NortonCommander.Panel
             }
             RefreshContent();
             PrintObjects(result);
+            SetContent(file.FullName);
             //SetContent();
         }
 

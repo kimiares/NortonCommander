@@ -61,34 +61,23 @@ namespace NortonCommander
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            List<object> menu = new List<object>();
-            for (int i = 0; i < 100; i++)
-                menu.Add("word"+i.ToString());
+       
             
             Console.ResetColor();
             ArrangeButtons();
 
-            //List<object> Local = Panel.Panel.GetLocalList(menu, 95);
-
-            //Panel.Panel.PanelInitializer(3, @"C:\\",@"D:\\");
-
+            
 
             //тест
 
             Panel.Panel[] MyPanels = new Panel.Panel[2];
-            MyPanels[0] = new Panel.Panel(@"C:\\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black, true);
-            MyPanels[1] = new Panel.Panel(@"D:\\", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black, true);
-           
-           
-            
-            
-            
-         
+            MyPanels[0] = new Panel.Panel(@"C:\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black);
+            MyPanels[1] = new Panel.Panel(@"C:\Windows", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black);
+            bool i = false;
+            int hhh = 0;
             ConsoleKey MyKey;
-
             do
             {
-
                 MyKey = Program.GetKey().Key;
 
                 switch (MyKey)
@@ -100,18 +89,26 @@ namespace NortonCommander
                         Menu.Menu MyMenu5 = new Menu.Menu("Copy Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Copy 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
                         break;
                     case ConsoleKey.Escape:
+                        break;
                     case ConsoleKey.UpArrow:
-                        MyPanels[0].Move(false);
-                        MyPanels[0].SetContent();
+                        MyPanels[i ? 0 : 1].Move(false);
+                        MyPanels[i ? 0 : 1].SetContent();
                     break;
                     case ConsoleKey.DownArrow:
-                        MyPanels[0].Move(true);
-                        MyPanels[0].SetContent();
+                        MyPanels[i ? 0 : 1].Move(true);
+                        MyPanels[i ? 0 : 1].SetContent();
                         break;
                     case ConsoleKey.Enter:
-                        MyPanels[0].OpenOrRunObject();
+                        MyPanels[1].OpenOrRunObject();
                         //MyPanels[0].SetContent();
                         break;
+                    case ConsoleKey.Tab:
+                        i = !i;
+                        hhh = i ? 0 : 1;
+                        break;
+
+
+
 
                 }
             }

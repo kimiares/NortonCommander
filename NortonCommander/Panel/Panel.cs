@@ -49,11 +49,13 @@ namespace NortonCommander.Panel
                 this.objects.AddRange(Files.GetFiles(Path));
                 PrintObjects(this.objects);
         }
-       
+        
+
         //если меньше чем максимум - просто выводим
         public void PrintObjects(List<FileSystemInfo> list)
         {
             int sdvig = 0;
+            
             if (SelectedObjectIndex == -1) SelectedObjectIndex =  list.Count - 1;
             if (SelectedObjectIndex >= maxObjectsPanel)
             {
@@ -84,9 +86,38 @@ namespace NortonCommander.Panel
                 }
          }
 
-        internal void OpenOrRunObject()
+
+        public FileSystemInfo GetObject()
         {
-            throw new NotImplementedException();
+
+           
+         return this.objects[SelectedObjectIndex];
+                
+           
+
+
+
+        }
+        public void OpenOrRunObject()
+        {
+            List<FileSystemInfo> result = new List<FileSystemInfo>();
+            var file = GetObject();
+            if (file is DirectoryInfo)
+            {
+                result.AddRange(Folder.GetFolders(file.FullName));
+                Path = file.FullName;
+
+            }
+            if (file is FileInfo)
+            {
+
+                result.AddRange(Files.GetFiles(file.FullName));
+            }
+            SelectedObjectIndex = 0;
+            RefreshContent();
+            PrintObjects(result);
+            //SetContent();
+           //SetContent(file.FullName);
         }
 
         public void RefreshContent()

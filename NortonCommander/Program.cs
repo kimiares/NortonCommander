@@ -99,8 +99,8 @@ namespace NortonCommander
                         MyPanels[i ? 0 : 1].SetContent();
                         break;
                     case ConsoleKey.Enter:
-                        MyPanels[1].OpenOrRunObject();
-                        //MyPanels[0].SetContent();
+                        MyPanels[i ? 0 : 1].OpenOrRunObject();
+                        //MyPanels[i ? 0 : 1].SetContent();
                         break;
                     case ConsoleKey.Tab:
                         i = !i;

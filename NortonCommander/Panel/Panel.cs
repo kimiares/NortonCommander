@@ -95,6 +95,10 @@ namespace NortonCommander.Panel
                         Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                         //Console.Write(list[i].Name);
                         Console.WriteLine(CutName(list[i].Name, columnWidth-4));
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
+                        Console.Write(list[i].CreationTime.ToShortDateString());
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth * 2, columnFirstStart.Y + i);
+                        Console.Write(list[i].CreationTime.ToShortTimeString());
                         Console.ResetColor();
                     }
                     else

@@ -94,6 +94,8 @@ namespace NortonCommander.Panel
                         Console.Write(list[i + sdvig].CreationTime.ToShortDateString());
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth * 2, columnFirstStart.Y + i);
                         Console.Write(list[i + sdvig].CreationTime.ToShortTimeString());
+                
+
                 }
          }
 

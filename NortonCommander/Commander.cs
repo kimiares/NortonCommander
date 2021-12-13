@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using NortonCommander.Panel;
-
+using NortonCommander.Operations;
+using NortonCommander.Panel;
 
 namespace NortonCommander
 {
@@ -20,20 +21,26 @@ namespace NortonCommander
             //Panel.PanelFunctions panel2 = new Panel.PanelFunctions();
 
         }
-        public static void OpenOrRunObject(FileSystemInfo file)
-        {
+        //public static void OpenOrRunObject()
+        //{
+        //    List<FileSystemInfo> result = new List<FileSystemInfo>();
+        //    FileSystemInfo file = Panel.Panel.GetObject();
+        //    if (file is DirectoryInfo)
+        //    {
+        //        result.AddRange(Folder.GetFolders(file.FullName));
+        //        //PanelFunctions.PrintObject();
+        //    }
+        //    if (file is FileInfo)
+        //    {
 
-                if (file is DirectoryInfo)
-                {
-                    Directory.GetDirectories(file.FullName);
-                    //PanelFunctions.PrintObject();
-                }
-                if (file is FileInfo)
-                {
-                    Process.Start(file.FullName);
-                }
-            
-            
+        //        result.AddRange(Files.GetFiles(file.FullName));
+        //    }
+        //    Panel.Panel.PrintObjects(result);
+
+
+            //}
+
+
+
         }
-    }
 }

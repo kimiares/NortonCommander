@@ -82,7 +82,7 @@ namespace NortonCommander.Panel
             if (selectedObjectIndex == list.Count) selectedObjectIndex = 0;
             //   do
             //   {
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < maxObjectsPanel; i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
                     if (i == selectedObjectIndex)
@@ -93,7 +93,8 @@ namespace NortonCommander.Panel
                         Console.ForegroundColor = tmp;
                         
                         Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
-                        Console.Write(list[i].Name);
+                        //Console.Write(list[i].Name);
+                        Console.WriteLine(CutName(list[i].Name, columnWidth-4));
 
                         
 
@@ -101,12 +102,14 @@ namespace NortonCommander.Panel
                     }
                     else
                     {
-                        Console.Write(list[i].Name);
+                        Console.WriteLine(CutName(list[i].Name, columnWidth-4));
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
-                        Console.Write(list[i].CreationTime.Date);
+                        Console.Write(list[i].CreationTime.ToShortDateString());
+                        Console.SetCursorPosition(columnFirstStart.X + columnWidth*2, columnFirstStart.Y + i);
+                        Console.Write(list[i].CreationTime.ToShortTimeString());
 
-                       
-                    }
+
+                }
 
 
                     //if (selectedObjectIndex == maxObjectsPanel)
@@ -169,9 +172,17 @@ namespace NortonCommander.Panel
                 this.Active = !Active;
             }
         }
+        public static string CutName(string name, int length)
+        {
+            if (name.Length > length)
+            {
+                name = name.Substring(0, length);
+            }
+            return name;
+        }
 
-       
-       
+
+
 
 
 

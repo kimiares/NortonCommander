@@ -21,25 +21,26 @@ namespace NortonCommander
             //Panel.PanelFunctions panel2 = new Panel.PanelFunctions();
 
         }
-        public static void OpenOrRunObject(FileSystemInfo file)
-        {
-            List<FileSystemInfo> result = new List<FileSystemInfo>();
-            if (file is DirectoryInfo)
-            {
-                result.AddRange(Folder.GetFolders(file.FullName));   
-                //PanelFunctions.PrintObject();
-            }
-            if (file is FileInfo)
-            {
-                
-                result.AddRange(Files.GetFiles(file.FullName));
-            }
-            Panel.Panel.PrintObjects(result);
+        //public static void OpenOrRunObject()
+        //{
+        //    List<FileSystemInfo> result = new List<FileSystemInfo>();
+        //    FileSystemInfo file = Panel.Panel.GetObject();
+        //    if (file is DirectoryInfo)
+        //    {
+        //        result.AddRange(Folder.GetFolders(file.FullName));
+        //        //PanelFunctions.PrintObject();
+        //    }
+        //    if (file is FileInfo)
+        //    {
+
+        //        result.AddRange(Files.GetFiles(file.FullName));
+        //    }
+        //    Panel.Panel.PrintObjects(result);
+
+
+            //}
+
 
 
         }
-        
-
-
-    }
 }

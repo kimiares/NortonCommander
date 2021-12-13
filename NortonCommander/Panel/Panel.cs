@@ -42,7 +42,7 @@ namespace NortonCommander.Panel
         }
 
         //все, что выводится в панели
-        List<FileSystemInfo> objects = new List<FileSystemInfo>();
+       public  List<FileSystemInfo> objects = new List<FileSystemInfo>();
 
 
         public void Move(bool direction)
@@ -61,6 +61,7 @@ namespace NortonCommander.Panel
             if (this.Active)
             {
                 //Console.Clear();
+                RefreshContent();
                 string path = Disk.GetFirstDiskPath();
                 this.objects.Clear();
                 this.objects.AddRange(Folder.GetFolders(path));
@@ -83,8 +84,10 @@ namespace NortonCommander.Panel
             for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count:maxObjectsPanel); i++)
                 {
                     Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y + i);
-                    if (i == selectedObjectIndex)
+                
+                if (i == selectedObjectIndex)
                     {
+                      
                         var tmp = Console.BackgroundColor;
                         Console.BackgroundColor = Console.ForegroundColor;
                         Console.ForegroundColor = tmp;
@@ -96,11 +99,13 @@ namespace NortonCommander.Panel
                     }
                     else
                     {
+                       
                         Console.WriteLine(CutName(list[i].Name, columnWidth-4));
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
                         Console.Write(list[i].CreationTime.ToShortDateString());
                         Console.SetCursorPosition(columnFirstStart.X + columnWidth*2, columnFirstStart.Y + i);
                         Console.Write(list[i].CreationTime.ToShortTimeString());
+                    
                 }
 
 
@@ -116,10 +121,36 @@ namespace NortonCommander.Panel
 
         }
 
-        public static void SelectObject()
+        public FileSystemInfo GetObject()
         {
-           
+
+            return this.objects[selectedObjectIndex];
+            
+
+
         }
+
+        public void OpenOrRunObject()
+        {
+            
+            List<FileSystemInfo> result = new List<FileSystemInfo>();
+            var file = GetObject();
+            if (file is DirectoryInfo)
+            {
+                result.AddRange(Folder.GetFolders(file.FullName));
+                
+            }
+            if (file is FileInfo)
+            {
+
+                result.AddRange(Files.GetFiles(file.FullName));
+            }
+            RefreshContent();
+            PrintObjects(result);
+            //SetContent();
+        }
+
+
 
         public static List<FileSystemInfo> GetLocalList(List<FileSystemInfo> list, int currentIndex)
         {
@@ -147,12 +178,18 @@ namespace NortonCommander.Panel
 
         //перенести в тейбл?
         //заливает все строки столбца пробелами
-        public void RefreshContent()
+        public static void RefreshContent()
         {
-            for (int i = 1; i < maxObjectsPanel; i++)
+            for (int i = 0; i < maxObjectsPanel; i++)
             {
-                Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y);
-                Console.Write(new String(' ', columnWidth));
+                Console.SetCursorPosition(columnFirstStart.X, columnFirstStart.Y+i);
+                Console.Write(new String(' ', columnWidth-3));
+
+                Console.SetCursorPosition(columnFirstStart.X + columnWidth, columnFirstStart.Y + i);
+                Console.Write(new String(' ', columnWidth - 4));
+
+                Console.SetCursorPosition(columnFirstStart.X + columnWidth * 2, columnFirstStart.Y + i);
+                Console.Write(new String(' ', columnWidth - 5));
             }
 
         }

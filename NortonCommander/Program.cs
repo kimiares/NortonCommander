@@ -94,7 +94,13 @@ public static void ArrangeButtons()
                 switch (MyKey)
                 {
                     case ConsoleKey.F8:
-                        Menu.Menu MyMenu = new Menu.Menu("Deleting Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Delete 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
+                        Menu.Menu MyMenu8 = new Menu.Menu("Deleting Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Delete 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
+                        break;
+                    case ConsoleKey.F5:
+                        Menu.Menu MyMenu5 = new Menu.Menu("Copy Files", new Drawing.Point(10, 14), new Drawing.Point(45, 7), 0, "Copy 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
+                        break;
+                    case ConsoleKey.Escape:
+                        
                         break;
                 }
             }

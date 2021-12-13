@@ -18,28 +18,19 @@ namespace NortonCommander.Button
             BackColor = backcolor;
             Draw();
         }
-
         public int Size { get; set; }
         public string Text { get; set; }
-
         public int X { get; set; }
         public int Y { get; set; }
-
-
-
         public ConsoleColor TextColor { get; set; }
         public ConsoleColor BackColor { get; set; }
-
         public void Draw()
         {
             Console.SetCursorPosition(this.X, this.Y);
-
             Console.BackgroundColor = this.BackColor;
             Console.ForegroundColor = this.TextColor;
             Console.Write(this.Text);
             Console.ForegroundColor = ConsoleColor.Black;
-
         }
-
     }
 }

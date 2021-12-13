@@ -16,7 +16,6 @@ namespace NortonCommander.Drawing
         public int ColCount { get; set; } // количество колонок
         public ConsoleColor TextColor { get; set; } 
         public ConsoleColor BackColor { get; set; }
-
         public string Name { get; set; }
 
         public List<Line> LinesInitializer()
@@ -45,7 +44,6 @@ namespace NortonCommander.Drawing
             for (int i=0;i<4;i++)
                 PointForCorners.Add(new Point(Lines[i].A.X, Lines[i].A.Y));
             return PointForCorners;
-
         }
         public List<Point> GetTCornersPoint()
         {
@@ -61,9 +59,9 @@ namespace NortonCommander.Drawing
         public Table(string name, Point a, Point b, int colcount, ConsoleColor textcolor, ConsoleColor backcolor)
         {
             Name = name;
-            ColCount = colcount;
             A = a;
             B = b;
+            ColCount = colcount;
             TextColor = textcolor;
             BackColor = backcolor;
             Lines = LinesInitializer();
@@ -74,24 +72,19 @@ namespace NortonCommander.Drawing
             DrawTCorners(GetTCornersPoint());
             AddTableName();
             Console.ResetColor();
-
         }
         public virtual void Draw()
         {
-            
-
-            foreach (Line line in Lines)
+             foreach (Line line in Lines)
             {
                 line.Draw();
             }
-           
-         }
+          }
 
         public void AddTableName()
         {
             Console.SetCursorPosition(A.X+(B.X-A.X)/2  - Name.Length/2, B.Y);
             Console.Write(Name);
-
         }
 
         public void DrawCorners(List<Point> Points)

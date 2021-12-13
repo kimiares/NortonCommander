@@ -15,7 +15,6 @@ namespace NortonCommander.Menu
 
         public Menu(string name, Point a, Point b, int colcount, string text, ConsoleColor textcolor, ConsoleColor backcolor) :base(name, a,b,colcount, textcolor,backcolor)
         {
-            
             Text = text;
             ActiveButton = false;
             ClearMenuField();
@@ -25,7 +24,6 @@ namespace NortonCommander.Menu
 
         public void AddButtons()
         {
-            
             Button.Button ButtonYes = new Button.Button("Yes",A.X+5 ,A.Y-1, ConsoleColor.Red, ActiveButton ? ConsoleColor.Blue: ConsoleColor.White);
             Button.Button ButtonNO = new Button.Button("No", B.X - 10, A.Y - 1, ConsoleColor.Red, ActiveButton ? ConsoleColor.White : ConsoleColor.Blue);
             ButtonYes.Draw();
@@ -62,21 +60,32 @@ namespace NortonCommander.Menu
         public void Do()
         {
             ConsoleKey MyKey;
-           
             do
             {
                 MyKey = Program.GetKey().Key;
-
                 switch (MyKey)
                 {
                     case ConsoleKey.Tab:
-                        ChangeActiveButton();
+                    ChangeActiveButton();
+                    break;
+                    case ConsoleKey.Escape:
+                        ActiveButton = false;
+                        MyKey = ConsoleKey.Enter;
                         break;
+                    
                 }
             }
             while (MyKey != ConsoleKey.Enter);
+
+            if (ActiveButton)
+            { 
+            // Выполнить операцию  !
+            
+            }
+            //Ничего не делаем, выход из меню
+
+
             EraseMenu();
         }
-
     }
 }

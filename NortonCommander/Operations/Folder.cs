@@ -83,11 +83,20 @@ namespace NortonCommander.Operations
         public static List<FileSystemInfo> GetFolders(string path)
         {
             List<FileSystemInfo> result = new List<FileSystemInfo>();
-            DirectoryInfo dir = new DirectoryInfo(path);
-            DirectoryInfo[] folders = dir.GetDirectories();
-            foreach (DirectoryInfo fol in folders)
+
+            try
             {
-                result.Add(fol);
+                DirectoryInfo dir = new DirectoryInfo(path);
+                DirectoryInfo[] folders = dir.GetDirectories();
+                foreach (DirectoryInfo fol in folders)
+                {
+                    result.Add(fol);
+                }
+                return result;
+            }
+            catch (Exception e)
+            {
+                result.Add(new DirectoryInfo(path));
             }
             return result;
         }

@@ -133,18 +133,29 @@ namespace NortonCommander.Operations
         }
 
 
-
+        // если нет доступа, обновляет страницу с путем*
         public static List<FileSystemInfo> GetFiles(string path)
         {
             List<FileSystemInfo> result = new List<FileSystemInfo>();
-            DirectoryInfo dir = new DirectoryInfo(path);
-            FileInfo[] files = dir.GetFiles();
-
-            foreach (FileInfo file in files)
+            try
             {
-                result.Add(file);
+                DirectoryInfo dir = new DirectoryInfo(path);
+                FileInfo[] files = dir.GetFiles();
+
+                foreach (FileInfo file in files)
+                {
+                    result.Add(file);
+                }
+                return result;
+
+            }
+            catch(Exception e)
+            {
+                Panel.Panel.RefreshContent();
+                
             }
             return result;
+            
         }
 
         /*Search,

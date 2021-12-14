@@ -56,7 +56,8 @@ namespace NortonCommander
 
         static void Main(string[] args)
         {
-            Console.CursorVisible = false;
+            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+            Console.CursorVisible = false;        
             Console.ResetColor();
             ArrangeButtons();
             //тест

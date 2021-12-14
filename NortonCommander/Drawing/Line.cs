@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NortonCommander.Drawing
 {
-    class Line : List<Point>
+    class Line : List<Point>, IDraw
     {
         public Point A { get; set; }
         public Point B { get; set; }
@@ -46,7 +46,7 @@ namespace NortonCommander.Drawing
 
 
         }
-        internal void Draw()
+        public void Draw()
         {
 
             if (isGorisontal(A, B))

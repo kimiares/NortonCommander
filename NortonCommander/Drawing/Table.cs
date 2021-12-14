@@ -14,7 +14,7 @@ namespace NortonCommander.Drawing
         public Point A { get; set; } // Левый нижний угол
         public Point B { get; set; } // правый верхний угол
         public int ColCount { get; set; } // количество колонок
-        public ConsoleColor TextColor { get; set; } 
+        public ConsoleColor TextColor { get; set; }
         public ConsoleColor BackColor { get; set; }
         public string Name { get; set; }
 
@@ -32,28 +32,23 @@ namespace NortonCommander.Drawing
                 int ColumnWidth = (B.X - A.X) / ColCount;
                 for (int i = 1; i < ColCount; i++)
                 {
-                    lines.Add(new Line(new Point(A.X + i*ColumnWidth, A.Y), new Point((A.X + i*ColumnWidth), B.Y)));
+                    lines.Add(new Line(new Point(A.X + i * ColumnWidth, A.Y), new Point((A.X + i * ColumnWidth), B.Y)));
                 }
             }
             return lines;
         }
 
-        public List<Point> GetCornersPoint()
+        public IEnumerable<Point> GetCornersPoint()
         {
-            List<Point> PointForCorners = new List<Point>();
-            for (int i=0;i<4;i++)
-                PointForCorners.Add(new Point(Lines[i].A.X, Lines[i].A.Y, Corner.Corners[i]));
-            return PointForCorners;
+            for (int i = 0; i < 4; i++)
+                yield return new Point(Lines[i].A.X, Lines[i].A.Y, Corner.Corners.ToArray()[i]);
         }
-        public List<Point> GetTCornersPoint()
+
+        public IEnumerable<Point> GetTCornersPoint()
         {
-            List<Point> PointForTCorners = new List<Point>();
             if (Lines.Count > 4)
-            {
-                for (int i=4; i<Lines.Count;i++)
-                    PointForTCorners.Add(new Point(Lines[i][0].X, Lines[i][0].Y));
-            }
-            return PointForTCorners;
+                for (int i = 4; i < Lines.Count; i++)
+                    yield return new Point(Lines[i][0].X, Lines[i][0].Y);
         }
 
         public Table(string name, Point a, Point b, int colcount, ConsoleColor textcolor, ConsoleColor backcolor)
@@ -66,28 +61,28 @@ namespace NortonCommander.Drawing
             BackColor = backcolor;
             Lines = LinesInitializer();
             Draw();
-           
-            
+
+
             Console.ResetColor();
         }
         public virtual void Draw()
         {
             Console.BackgroundColor = BackColor;
             Console.ForegroundColor = TextColor;
-           
-            foreach (Line line in Lines)
+
+            foreach (IDraw line in Lines.Cast<IDraw>()
+                                        .Union(GetCornersPoint())
+                                        .Union(GetTCornersPoint()))
             {
                 line.Draw();
             }
-            DrawCorners(GetCornersPoint());
-            DrawTCorners(GetTCornersPoint());
             AddTableName();
 
         }
 
         public void AddTableName()
         {
-            Console.SetCursorPosition(A.X+(B.X-A.X)/2  - Name.Length/2, B.Y);
+            Console.SetCursorPosition(A.X + (B.X - A.X) / 2 - Name.Length / 2, B.Y);
             Console.Write(Name);
         }
 
@@ -95,7 +90,7 @@ namespace NortonCommander.Drawing
         {
             foreach (Point point in Points)
             {
-                point.Draw(); 
+                point.Draw();
             }
         }
 
@@ -113,6 +108,6 @@ namespace NortonCommander.Drawing
     }
 }
 
-   
-    
+
+
 

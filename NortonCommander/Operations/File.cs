@@ -96,6 +96,7 @@ namespace NortonCommander.Operations
         //delete files and directories
         public static void DeleteFilesAndFolders(params FileSystemInfo[] filesToDelete)
         {
+            
             if(filesToDelete.Length!=0)
             {
                 foreach (FileSystemInfo file in filesToDelete)

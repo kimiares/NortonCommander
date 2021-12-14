@@ -169,5 +169,12 @@ namespace NortonCommander.Panel
                 name = name.Substring(0, length);
              return name;
         }
+        /// <summary>
+        /// метод, который передает объект в метод удаления из Operation
+        /// </summary>
+        public void Delete()
+        {
+            Files.DeleteFilesAndFolders(GetObject());
+        }
     }
 }

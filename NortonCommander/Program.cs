@@ -112,7 +112,7 @@ namespace NortonCommander
                         activePanel.Draw();
                         break;
                     case ConsoleKey.F8:
-                        Files.DeleteFilesAndFolders();
+                        activePanel.Delete();
                         break;
 
                     case ConsoleKey.Escape:

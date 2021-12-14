@@ -32,7 +32,7 @@ namespace NortonCommander
             {
                 MenuItem = SetLength("F" + (i + 1).ToString() + " " + Enum.GetName(typeof(ButtonEnum), i + 1), MenuLength);
                 int y = i * (MenuLength + Space) + StartPosition;
-                Button.Button MyButton = new Button.Button(MenuItem, y, origHeight, ConsoleColor.Black, ConsoleColor.Blue );
+                Button.Reactangle MyButton = new Button.Reactangle(MenuItem, y, origHeight, ConsoleColor.Black, ConsoleColor.Blue );
             }
         }
 
@@ -62,10 +62,15 @@ namespace NortonCommander
             ArrangeButtons();
             //тест
 
+        
             Panel.Panel[] MyPanels = new Panel.Panel[2];
+
+          
+
             MyPanels[0] = new Panel.Panel(@"C:\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black);
             MyPanels[1] = new Panel.Panel(@"C:\Windows", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black);
             bool i = false;
+            Panel.Panel activePanel = MyPanels[i ? 0 : 1];
             int my = 0;
             ConsoleKey MyKey;
             do
@@ -78,24 +83,31 @@ namespace NortonCommander
                         
                     case ConsoleKey.F2:
                     case ConsoleKey.F3:
-                        my = MyPanels[i ? 0 : 1].A.X;
-                    Menu.Menu MyMenu8 = new Menu.Menu("Deleting Files", new Drawing.Point(MyPanels[i ? 0 : 1].A.X+10, 14), new Drawing.Point(MyPanels[i ? 0 : 1].A.X+45, 7), 0, "Delete 12 files ?", ConsoleColor.Blue, ConsoleColor.Black);
-                        MyPanels[i ? 0 : 1].SetContent();
-                        MyPanels[i ? 0 : 1].Draw();
+                        my = activePanel.A.X;
+                    Menu.Menu MyMenu8 = new Menu.Menu("Deleting Files",
+                        new Drawing.Point(activePanel.A.X+10, 14), 
+                        new Drawing.Point(activePanel.A.X+45, 7), 
+                        0, 
+                        "Delete 12 files ?",
+                        ConsoleColor.Blue, 
+                        ConsoleColor.Black);
+
+                        activePanel.SetContent();
+                        activePanel.Draw();
                         break;
                     case ConsoleKey.Escape:
                         break;
                     case ConsoleKey.UpArrow:
-                        MyPanels[i ? 0 : 1].Move(false);
-                        MyPanels[i ? 0 : 1].SetContent();
+                        activePanel.Move(false);
+                        activePanel.SetContent();
                     break;
                     case ConsoleKey.DownArrow:
-                        MyPanels[i ? 0 : 1].Move(true);
-                        MyPanels[i ? 0 : 1].SetContent();
+                        activePanel.Move(true);
+                        activePanel.SetContent();
                         break;
                     case ConsoleKey.Enter:
-                        MyPanels[i ? 0 : 1].OpenOrRunObject();
-                        //MyPanels[i ? 0 : 1].SetContent();
+                        activePanel.OpenOrRunObject();
+                        activePanel.SetContent();
                         break;
                     case ConsoleKey.Tab:
                         i = !i;

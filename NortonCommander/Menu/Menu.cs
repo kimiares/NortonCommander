@@ -13,7 +13,7 @@ namespace NortonCommander.Menu
         public bool ActiveButton { get; set; }
         public bool GetKey { get; private set; }
 
-        public Menu(string name, Point a, Point b, int colcount, string text, ConsoleColor textcolor, ConsoleColor backcolor) :base(name, a,b,colcount, textcolor,backcolor)
+        public Menu(string name, Point a, Point b,int colcount, string text, ConsoleColor textcolor, ConsoleColor backcolor) :base(name, a,b,colcount, textcolor,backcolor)
         {
             Text = text;
             ActiveButton = false;
@@ -24,8 +24,8 @@ namespace NortonCommander.Menu
 
         public void AddButtons()
         {
-            Button.Button ButtonYes = new Button.Button("Yes",A.X+5 ,A.Y-1, ConsoleColor.Red, ActiveButton ? ConsoleColor.Blue: ConsoleColor.White);
-            Button.Button ButtonNO = new Button.Button("No", B.X - 10, A.Y - 1, ConsoleColor.Red, ActiveButton ? ConsoleColor.White : ConsoleColor.Blue);
+            Button.Reactangle ButtonYes = new Button.Reactangle("Yes",A.X+5 ,A.Y-1, ConsoleColor.Red, ActiveButton ? ConsoleColor.Blue: ConsoleColor.White);
+            Button.Reactangle ButtonNO = new Button.Reactangle("No", B.X - 10, A.Y - 1, ConsoleColor.Red, ActiveButton ? ConsoleColor.White : ConsoleColor.Blue);
             ButtonYes.Draw();
             ButtonNO.Draw();
             Console.ResetColor();

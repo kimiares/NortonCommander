@@ -11,7 +11,8 @@ namespace NortonCommander.Drawing
 {
     public static class Corner
     {
-        public static List<string> Corners = new List<string>() { "╚", "╝", "╗", "╔" };
-        public static List<string> TCorners = new List<string>() { "╦", "╩" };
+        public static string Corners = "╚╝╗╔";
+
+        public static string TCorners =  "╦╩";
     }
 }

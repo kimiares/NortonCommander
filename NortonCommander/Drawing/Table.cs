@@ -42,7 +42,7 @@ namespace NortonCommander.Drawing
         {
             List<Point> PointForCorners = new List<Point>();
             for (int i=0;i<4;i++)
-                PointForCorners.Add(new Point(Lines[i].A.X, Lines[i].A.Y));
+                PointForCorners.Add(new Point(Lines[i].A.X, Lines[i].A.Y, Corner.Corners[i]));
             return PointForCorners;
         }
         public List<Point> GetTCornersPoint()
@@ -95,8 +95,7 @@ namespace NortonCommander.Drawing
         {
             foreach (Point point in Points)
             {
-                Console.SetCursorPosition(point.X, point.Y);
-                Console.Write(Corner.Corners[Points.IndexOf(point)]);
+                point.Draw(); 
             }
         }
 

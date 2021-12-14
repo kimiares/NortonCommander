@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace NortonCommander.Button
 {
-    public class Button
+    public class Reactangle
     {
        
-        public Button(string text, int x, int y, ConsoleColor textcolor, ConsoleColor backcolor)
+        public Reactangle(string text, int x, int y, ConsoleColor textcolor, ConsoleColor backcolor)
         {
             Text = text;
             X = x;

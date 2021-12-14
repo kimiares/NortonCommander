@@ -25,15 +25,7 @@ namespace NortonCommander.Drawing
             }
             return result;
         }
-        public bool isGorisontal(Point A, Point B)
-        {
-            bool result = false;
-            if (A.X == B.X)
-            {
-                return true;
-            }
-            return result;
-        }
+        public bool isGorisontal(Point A, Point B) => A.X == B.X;
         internal void DotsOnLineVertical(Point start, Point finish)
         {
             for (int i = Math.Min(start.X, finish.X); i < Math.Max(start.X, finish.X); i++)
@@ -57,18 +49,18 @@ namespace NortonCommander.Drawing
         internal void Draw()
         {
 
-            if (isGorisontal(this[0], this[1]))
+            if (isGorisontal(A, B))
             {
                 foreach (Point point in this)
                 {
-                    point.Draw("║");
+                    point.Draw('║');
                 }
             }
             else
             {
                 foreach (Point point in this)
                 {
-                    point.Draw("═");
+                    point.Draw('═');
                 }
 
             }

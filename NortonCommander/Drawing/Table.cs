@@ -11,9 +11,18 @@ namespace NortonCommander.Drawing
     {
 
         internal List<Line> Lines;
-        public Point A { get; set; } // Левый нижний угол
-        public Point B { get; set; } // правый верхний угол
-        public int ColCount { get; set; } // количество колонок
+        /// <summary>
+        /// Левый нижний угол
+        /// </summary>
+        public Point A { get; set; }
+        /// <summary>
+        ///  правый верхний угол
+        /// </summary>
+        public Point B { get; set; }
+        /// <summary>
+        /// количество колонок
+        /// </summary>
+        public int ColCount { get; set; } 
         public ConsoleColor TextColor { get; set; }
         public ConsoleColor BackColor { get; set; }
         public string Name { get; set; }

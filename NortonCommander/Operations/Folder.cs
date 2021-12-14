@@ -96,9 +96,9 @@ namespace NortonCommander.Operations
             }
             catch (Exception e)
             {
-                result.Add(new DirectoryInfo(path));
+                throw new Exception();
             }
-            return result;
+           
         }
 
 

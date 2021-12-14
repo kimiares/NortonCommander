@@ -2,7 +2,8 @@
 using NortonCommander.Menu;
 using System;
 using System.Collections.Generic;
-
+using System.Text;
+using NortonCommander.Operations;
 
 namespace NortonCommander
 {
@@ -28,11 +29,19 @@ namespace NortonCommander
             int MenuLength = 10;
             int Space = 2;
             string MenuItem = "";
+            
             for (int i = 0; i <= 9; i++)
             {
-                MenuItem = SetLength("F" + (i + 1).ToString() + " " + Enum.GetName(typeof(ButtonEnum), i + 1), MenuLength);
+                StringBuilder menuItemtest = new StringBuilder();
+                //MenuItem = SetLength("F" + (i + 1).ToString() + " " + Enum.GetName(typeof(ButtonEnum), i + 1), MenuLength);
+                menuItemtest = menuItemtest.Append('F')
+                    .Append((i + 1)
+                    .ToString())
+                    .Append(' ')
+                    .Append(Enum.GetName(typeof(ButtonEnum),i+1));
+                MenuItem = SetLength(menuItemtest.ToString(), MenuLength);
                 int y = i * (MenuLength + Space) + StartPosition;
-                Button.Reactangle MyButton = new Button.Reactangle(MenuItem, y, origHeight, ConsoleColor.Black, ConsoleColor.Blue );
+                Button.Reactangle MyButton = new Button.Reactangle(MenuItem.ToString(), y, origHeight, ConsoleColor.Black, ConsoleColor.Blue );
             }
         }
 
@@ -69,24 +78,31 @@ namespace NortonCommander
 
             MyPanels[0] = new Panel.Panel(@"C:\", new Point(0, Console.WindowHeight - 4), new Point(Console.WindowWidth / 2 - 1, 1),3, ConsoleColor.Blue, ConsoleColor.Black);
             MyPanels[1] = new Panel.Panel(@"C:\Windows", new Point((Console.WindowWidth / 2 + 1), Console.WindowHeight - 4), new Point(Console.WindowWidth - 1, 1), 3, ConsoleColor.Blue, ConsoleColor.Black);
-            bool i = false;
-            Panel.Panel activePanel = MyPanels[i ? 0 : 1];
+
+            //bool i = false;
+            //Panel.Panel activePanel = MyPanels[i ? 0 : 1];
+            
             int my = 0;
+            bool i = false;
             ConsoleKey MyKey;
             do
             {
                 MyKey = Program.GetKey().Key;
+                
+                Panel.Panel activePanel = MyPanels[i ? 0 : 1];
+
 
                 switch (MyKey)
                 {
+                    
                     case ConsoleKey.F1:
                         
                     case ConsoleKey.F2:
                     case ConsoleKey.F3:
                         my = activePanel.A.X;
                     Menu.Menu MyMenu8 = new Menu.Menu("Deleting Files",
-                        new Drawing.Point(activePanel.A.X+10, 14), 
-                        new Drawing.Point(activePanel.A.X+45, 7), 
+                        new Point(activePanel.A.X+10, 14), 
+                        new Point(activePanel.A.X+45, 7), 
                         0, 
                         "Delete 12 files ?",
                         ConsoleColor.Blue, 
@@ -95,7 +111,12 @@ namespace NortonCommander
                         activePanel.SetContent();
                         activePanel.Draw();
                         break;
+                    case ConsoleKey.F8:
+                        Files.DeleteFilesAndFolders();
+                        break;
+
                     case ConsoleKey.Escape:
+                        Environment.Exit(0);
                         break;
                     case ConsoleKey.UpArrow:
                         activePanel.Move(false);
@@ -112,8 +133,6 @@ namespace NortonCommander
                     case ConsoleKey.Tab:
                         i = !i;
                         break;
-
-
 
 
                 }

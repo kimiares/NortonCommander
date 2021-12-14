@@ -137,7 +137,8 @@ namespace NortonCommander.Operations
         public static List<FileSystemInfo> GetFiles(string path)
         {
             List<FileSystemInfo> result = new List<FileSystemInfo>();
-            
+            try
+            {
                 DirectoryInfo dir = new DirectoryInfo(path);
                 FileInfo[] files = dir.GetFiles();
 
@@ -146,10 +147,12 @@ namespace NortonCommander.Operations
                     result.Add(file);
                 }
                 return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception();
+            }
 
-            
-           
-            
             
         }
 

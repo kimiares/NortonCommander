@@ -44,58 +44,81 @@ namespace NortonCommander.Panel
         {
                 RefreshContent();
                 this.objects.Clear();
-                this.objects.AddRange(Folder.GetFolders(Path));
-                this.objects.AddRange(Files.GetFiles(Path));
+
+                if (CheckOnRoot()) { this.objects.Add(Directory.GetParent(Path)); }
+                this.objects.AddRange(Folder.GetFolders(Path).Union(Files.GetFiles(Path)));
+                //this.objects.AddRange(Files.GetFiles(Path));
                 PrintObjects(this.objects);
         }
-        
+
 
         //если меньше чем максимум - просто выводим
         public void PrintObjects(List<FileSystemInfo> list)
         {
+            //list.Insert(0, Directory.GetParent(list[2].FullName));
             int sdvig = 0;
-            
-            if (SelectedObjectIndex == -1) SelectedObjectIndex =  list.Count - 1;
+
+            if (SelectedObjectIndex == -1) SelectedObjectIndex = list.Count - 1;
             if (SelectedObjectIndex >= maxObjectsPanel)
             {
-                sdvig = Math.Abs(SelectedObjectIndex - maxObjectsPanel)+1;
+                sdvig = Math.Abs(SelectedObjectIndex - maxObjectsPanel) + 1;
             }
             if (SelectedObjectIndex == list.Count)
             {
                 SelectedObjectIndex = 0;
                 sdvig = 0;
             }
-                for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count:maxObjectsPanel); i++)
-                {
-                    Console.SetCursorPosition(ColumnFirstStart.X, ColumnFirstStart.Y + i);
-               
+            for (int i = 0; i < (list.Count < maxObjectsPanel ? list.Count : maxObjectsPanel); i++)
+            {
+                Console.SetCursorPosition(ColumnFirstStart.X, ColumnFirstStart.Y + i);
+
                 if (i == SelectedObjectIndex - sdvig)
                 {
                     var tmp = Console.BackgroundColor;
                     Console.BackgroundColor = Console.ForegroundColor;
                     Console.ForegroundColor = tmp;
                 }
-                        Console.SetCursorPosition(ColumnFirstStart.X, ColumnFirstStart.Y + i);
-                        Console.WriteLine(CutName(list[i+sdvig].Name, ColumnWidth-4));
-                        Console.ResetColor();
-                        Console.SetCursorPosition(ColumnFirstStart.X + ColumnWidth, ColumnFirstStart.Y + i);
-                        Console.Write(list[i + sdvig].CreationTime.ToShortDateString());
-                        Console.SetCursorPosition(ColumnFirstStart.X + ColumnWidth * 2, ColumnFirstStart.Y + i);
-                        Console.Write(list[i + sdvig].CreationTime.ToShortTimeString());
-                }
-         }
+
+                Console.SetCursorPosition(ColumnFirstStart.X, ColumnFirstStart.Y + i);
+                Console.WriteLine(((i == 0) ?
+                    ".." :
+                    CutName(list[i + sdvig].Name, ColumnWidth - 4)));
+
+
+
+
+                Console.ResetColor();
+                Console.SetCursorPosition(ColumnFirstStart.X + ColumnWidth, ColumnFirstStart.Y + i);
+                Console.Write(list[i + sdvig].CreationTime.ToShortDateString());
+                Console.SetCursorPosition(ColumnFirstStart.X + ColumnWidth * 2, ColumnFirstStart.Y + i);
+                Console.WriteLine(((list[i + sdvig] is DirectoryInfo) ?
+                    $"{((DirectoryInfo)list[i + sdvig]).LastAccessTime.ToShortDateString()}" :
+                    $"{((FileInfo)list[i + sdvig]).Length}"));
+
+            }
+
+
+        }
+
+
+        public bool CheckOnRoot()
+        {
+            bool result = false;
+            if (Directory.GetParent(this.Path) != null) result = true;
+            return result;
+
+        }
 
 
         public FileSystemInfo GetObject()
         {
 
-           
-         return this.objects[SelectedObjectIndex];
-                
-           
-
-
-
+            if (this.objects != null && this.objects.Count!=0)
+            {
+                return this.objects[SelectedObjectIndex];
+            }
+            throw new Exception();
+         
         }
         public void OpenOrRunObject()
         {
@@ -110,7 +133,14 @@ namespace NortonCommander.Panel
             if (file is FileInfo)
             {
 
-                result.AddRange(Files.GetFiles(file.FullName));
+                try
+                {
+                    Process.Start(file.Name);
+                }
+                catch (Exception e)
+                {
+                    throw new FileNotFoundException();
+                }
             }
             SelectedObjectIndex = 0;
             RefreshContent();
@@ -131,6 +161,7 @@ namespace NortonCommander.Panel
                 Console.Write(new String(' ', ColumnWidth - 5));
             }
         }
+
 
         public static string CutName(string name, int length)
         {
